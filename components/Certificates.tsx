@@ -16,6 +16,16 @@ type Certificate = {
 
 const certificates: Certificate[] = [
   {
+    title: "Claude Certified Architect Prep",
+    issuer: "DevCompass",
+    date: "2026",
+    description:
+      "Preparation program for Anthropic's Claude Certified Architect certification. Covers building production applications with Claude, the Claude API, prompt engineering, agents and tool use, and AI fluency.",
+    link: "https://www.devcompass.ai/course/claude-certified-architect-prep",
+    linkLabel: "View course",
+    status: "earned",
+  },
+  {
     title: "Starknet Developer Camp",
     issuer: "StarkWare / Starknet Foundation",
     date: "2025",
