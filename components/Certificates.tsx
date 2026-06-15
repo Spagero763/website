@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ExternalLink, Award } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ExternalLink, Award, Maximize2, X } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
@@ -44,13 +46,23 @@ const certificates: Certificate[] = [
     date: "2025 to Present",
     description:
       "Comprehensive security curriculum covering auditing methodology, Solidity vulnerability patterns, formal verification, advanced Foundry techniques, and real audit case studies.",
-    link: "https://updraft.cyfrin.io",
-    linkLabel: "View program",
+    link: "https://profiles.cyfrin.io/u/afolabispagero71/achievements",
+    linkLabel: "View achievements",
     status: "in-progress",
   },
 ];
 
 export default function Certificates() {
+  const [lightbox, setLightbox] = useState<Certificate | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <section id="certificates" className="py-24 border-t border-line">
       <div className="shell">
@@ -61,10 +73,10 @@ export default function Certificates() {
             <Reveal key={cert.title} delay={i * 0.08}>
               <div className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-white/20">
                 {cert.image && (
-                  <a
-                    href={cert.link ?? cert.image}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(cert)}
+                    aria-label={`View ${cert.title} certificate`}
                     className="relative block h-52 w-full overflow-hidden border-b border-line bg-elevated"
                   >
                     <Image
@@ -73,7 +85,13 @@ export default function Certificates() {
                       fill
                       className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
                     />
-                  </a>
+                    <span className="absolute inset-0 flex items-center justify-center bg-ink/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-line bg-ink/80 px-4 py-2 text-xs font-medium text-fg backdrop-blur">
+                        <Maximize2 size={13} />
+                        View certificate
+                      </span>
+                    </span>
+                  </button>
                 )}
 
                 <div className="flex flex-1 flex-col p-6">
@@ -98,23 +116,74 @@ export default function Certificates() {
                   </p>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{cert.description}</p>
 
-                  {cert.link && (
-                    <a
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
-                    >
-                      <ExternalLink size={12} />
-                      {cert.linkLabel}
-                    </a>
-                  )}
+                  <div className="mt-5 flex items-center gap-4">
+                    {cert.image && (
+                      <button
+                        type="button"
+                        onClick={() => setLightbox(cert)}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-fg transition-colors hover:text-accent"
+                      >
+                        <Maximize2 size={12} />
+                        View certificate
+                      </button>
+                    )}
+                    {cert.link && (
+                      <a
+                        href={cert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
+                      >
+                        <ExternalLink size={12} />
+                        {cert.linkLabel}
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {lightbox?.image && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-ink/85 p-4 backdrop-blur-sm sm:p-10"
+          >
+            <button
+              type="button"
+              aria-label="Close"
+              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface/70 text-muted transition-colors hover:text-fg"
+            >
+              <X size={18} />
+            </button>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-h-[85vh] w-full max-w-4xl"
+            >
+              <Image
+                src={lightbox.image}
+                alt={`${lightbox.title} certificate`}
+                width={1400}
+                height={1000}
+                className="h-auto max-h-[85vh] w-full rounded-xl object-contain"
+              />
+              <p className="mt-3 text-center font-mono text-xs text-faint">
+                {lightbox.title} · {lightbox.issuer}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
