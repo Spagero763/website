@@ -51,7 +51,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 border-t border-line">
       <div className="shell">
-        <SectionHeading index="03" label="Track record" title="Where I've worked" />
+        <SectionHeading index="04" label="Track record" title="Where I've worked" />
 
         <div className="divide-y divide-line">
           {roles.map((r, i) => (

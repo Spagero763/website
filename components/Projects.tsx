@@ -14,7 +14,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 border-t border-line">
       <div className="shell">
-        <SectionHeading index="01" label="Selected work" title="Things I've shipped" />
+        <SectionHeading index="02" label="Selected work" title="Things I've shipped" />
 
         <div className="flex flex-col gap-24 sm:gap-28">
           {projects.map((project, i) => (

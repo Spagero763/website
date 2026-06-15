@@ -1,105 +1,62 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Shield, Code2, Zap, Layers } from "lucide-react";
-
-const stats = [
-  { value: "6+", label: "Projects Deployed" },
-  { value: "5", label: "Chains Built On" },
-  { value: "14+", label: "Smart Contracts" },
-  { value: "1+", label: "Year Building" },
-];
+import Reveal from "./ui/Reveal";
+import SectionHeading from "./ui/SectionHeading";
 
 const highlights = [
-  { icon: Shield, text: "Security-first — every contract designed to resist attack" },
-  { icon: Code2, text: "Deep EVM internals: storage, calldata, execution flow" },
-  { icon: Zap, text: "Foundry-based fuzz, fork, and unit testing on all projects" },
-  { icon: Layers, text: "Multi-chain across EVM ecosystems and Starknet (Cairo)" },
+  { icon: Shield, text: "Security-first. Every contract is designed to resist attack." },
+  { icon: Code2, text: "Deep EVM internals: storage, calldata, and execution flow." },
+  { icon: Zap, text: "Foundry fuzz, fork, and unit testing on every project." },
+  { icon: Layers, text: "Multi-chain across EVM ecosystems and Starknet with Cairo." },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-[#020617]">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="font-mono text-blue-400 text-sm mb-3 tracking-wider">
-              // about me
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 leading-snug">
-              I build blockchain systems{" "}
-              <span className="text-slate-400">that hold in production.</span>
-            </h2>
-            <p className="text-slate-400 leading-relaxed mb-5">
-              I&apos;m a smart contract engineer focused on building secure, production-ready
-              blockchain infrastructure. My work spans on-chain identity systems, DeFi payment
-              layers, and privacy-preserving trading protocols — always with security and gas
-              efficiency at the core.
+    <section id="about" className="py-24 border-t border-line">
+      <div className="shell">
+        <SectionHeading index="01" label="About" title="Engineering on-chain systems that hold" />
+
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+          <Reveal>
+            <p className="text-lg leading-relaxed text-muted">
+              I&apos;m a smart contract engineer focused on secure, production-ready blockchain
+              infrastructure. My work spans on-chain identity systems, payment layers, and
+              privacy-preserving trading protocols, always with security and gas efficiency at
+              the core.
             </p>
-            <p className="text-slate-400 leading-relaxed mb-8">
+            <p className="mt-5 leading-relaxed text-muted">
               I specialize in Solidity and Cairo, with deep experience in EVM internals,
-              rigorous Foundry-based testing (fuzz and fork), and gas optimization.
-              I&apos;ve deployed contracts across Base, Avalanche, Celo, and Starknet,
-              and I&apos;m actively deepening my smart contract security expertise through
-              Cyfrin Updraft&apos;s auditing curriculum.
+              rigorous Foundry testing, and gas optimization. I&apos;ve deployed contracts
+              across Base, Avalanche, Celo, and Starknet, and I&apos;m sharpening my auditing
+              skills through the Cyfrin Updraft security curriculum.
             </p>
 
-            {/* Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {highlights.map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-start gap-3">
-                  <div className="mt-0.5 w-8 h-8 flex items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/20 flex-shrink-0">
-                    <Icon size={14} className="text-blue-400" />
+                  <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10">
+                    <Icon size={15} className="text-accent" />
                   </div>
-                  <span className="text-slate-400 text-sm leading-relaxed">{text}</span>
+                  <span className="text-sm leading-relaxed text-muted">{text}</span>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </Reveal>
 
-          {/* Photo + stats */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col items-center lg:items-end gap-8"
-          >
-            {/* Photo */}
-            <div className="relative w-72 h-72">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/15 to-cyan-500/8 rounded-2xl" />
-              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10">
-                <Image
-                  src="/profile.jpg"
-                  alt="Afolabi Ayomide Emmanuel"
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-              {/* Offset border accent */}
-              <div className="absolute -bottom-3 -right-3 w-full h-full rounded-2xl border border-blue-500/20 -z-10" />
+          <Reveal delay={0.15} className="relative mx-auto w-full max-w-xs">
+            <div className="card-hairline overflow-hidden rounded-2xl p-1.5 shadow-card">
+              <Image
+                src="/profile.jpg"
+                alt="Afolabi Ayomide Emmanuel"
+                width={480}
+                height={560}
+                className="aspect-[4/5] w-full rounded-[0.9rem] object-cover object-top"
+              />
             </div>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 gap-3 w-full max-w-xs">
-              {stats.map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="bg-[#0f172a] border border-white/[0.06] rounded-xl p-4 text-center hover:border-white/[0.12] transition-colors"
-                >
-                  <div className="text-3xl font-bold text-white mb-1">{value}</div>
-                  <div className="text-xs text-slate-500">{label}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            <div className="absolute -bottom-6 -left-6 -z-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
+          </Reveal>
         </div>
       </div>
     </section>
