@@ -31,7 +31,7 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const SITE = "https://afolabi.dev";
+const SITE = "https://spagero.tech";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -75,6 +75,32 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased grain`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Afolabi Ayomide Emmanuel",
+              url: SITE,
+              jobTitle: "Smart Contract Engineer",
+              email: "afolabiayomide870@gmail.com",
+              sameAs: [
+                "https://github.com/Spagero763",
+                "https://x.com/Spagero71",
+                "https://www.linkedin.com/in/afolabi-ayomide-emmanuel-bba6b9367/",
+              ],
+              knowsAbout: [
+                "Solidity",
+                "Cairo",
+                "Smart Contract Security",
+                "Foundry",
+                "Starknet",
+                "EVM",
+              ],
+            }),
+          }}
+        />
         <SmoothScroll />
         <ScrollProgress />
         <CommandPalette />
