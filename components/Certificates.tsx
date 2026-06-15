@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ExternalLink, Award } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
@@ -9,6 +10,7 @@ type Certificate = {
   issuer: string;
   date: string;
   description: string;
+  image?: string;
   link?: string;
   linkLabel?: string;
   status: "earned" | "in-progress";
@@ -21,6 +23,7 @@ const certificates: Certificate[] = [
     date: "2026",
     description:
       "Preparation program for Anthropic's Claude Certified Architect certification. Covers building production applications with Claude, the Claude API, prompt engineering, agents and tool use, and AI fluency.",
+    image: "/claude-architect-certificate-devcompass.png",
     link: "https://www.devcompass.ai/course/claude-certified-architect-prep",
     linkLabel: "View course",
     status: "earned",
@@ -56,39 +59,57 @@ export default function Certificates() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {certificates.map((cert, i) => (
             <Reveal key={cert.title} delay={i * 0.08}>
-              <div className="card-hairline group h-full rounded-2xl p-6 transition-colors hover:border-white/20">
-                <div className="mb-5 flex items-start justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/30 bg-accent/10">
-                    <Award size={20} className="text-accent" />
-                  </div>
-                  <span
-                    className={`rounded-full border px-2.5 py-1 text-xs font-medium ${
-                      cert.status === "earned"
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-                        : "border-amber-500/20 bg-amber-500/10 text-amber-400"
-                    }`}
-                  >
-                    {cert.status === "earned" ? "Earned" : "In progress"}
-                  </span>
-                </div>
-
-                <h3 className="font-display text-lg font-medium text-fg">{cert.title}</h3>
-                <p className="mt-1 text-xs font-medium text-accent">
-                  {cert.issuer} · {cert.date}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{cert.description}</p>
-
-                {cert.link && (
+              <div className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-white/20">
+                {cert.image && (
                   <a
-                    href={cert.link}
+                    href={cert.link ?? cert.image}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
+                    className="relative block h-52 w-full overflow-hidden border-b border-line bg-elevated"
                   >
-                    <ExternalLink size={12} />
-                    {cert.linkLabel}
+                    <Image
+                      src={cert.image}
+                      alt={`${cert.title} certificate`}
+                      fill
+                      className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
                   </a>
                 )}
+
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-5 flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-accent/30 bg-accent/10">
+                      <Award size={20} className="text-accent" />
+                    </div>
+                    <span
+                      className={`rounded-full border px-2.5 py-1 text-xs font-medium ${
+                        cert.status === "earned"
+                          ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                          : "border-amber-500/20 bg-amber-500/10 text-amber-400"
+                      }`}
+                    >
+                      {cert.status === "earned" ? "Earned" : "In progress"}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display text-lg font-medium text-fg">{cert.title}</h3>
+                  <p className="mt-1 text-xs font-medium text-accent">
+                    {cert.issuer} · {cert.date}
+                  </p>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{cert.description}</p>
+
+                  {cert.link && (
+                    <a
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
+                    >
+                      <ExternalLink size={12} />
+                      {cert.linkLabel}
+                    </a>
+                  )}
+                </div>
               </div>
             </Reveal>
           ))}
