@@ -92,9 +92,10 @@ export default function Hero() {
                 </a>
               </Magnetic>
               <a
-                href="/cv.pdf"
+                href="/AFOLABI_AYOMIDE_EMMANUEL.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                download
                 className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/50 px-6 py-3 text-sm font-semibold text-fg backdrop-blur transition-colors hover:border-white/25"
               >
                 <Download size={15} />

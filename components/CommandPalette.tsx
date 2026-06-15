@@ -36,7 +36,7 @@ export default function CommandPalette() {
     { label: "Certificates", hint: "Credentials", icon: Award, run: () => go("#certificates") },
     { label: "Contact", hint: "Get in touch", icon: Mail, run: () => go("#contact") },
     { label: "Email me", hint: "afolabiayomide870@gmail.com", icon: Mail, run: () => go("mailto:afolabiayomide870@gmail.com") },
-    { label: "Download CV", hint: "PDF resume", icon: FileDown, run: () => go("/cv.pdf") },
+    { label: "Download CV", hint: "PDF resume", icon: FileDown, run: () => go("/AFOLABI_AYOMIDE_EMMANUEL.pdf") },
     { label: "GitHub", hint: "github.com/Spagero763", icon: Github, run: () => go("https://github.com/Spagero763") },
     { label: "Twitter", hint: "@Spagero71", icon: Twitter, run: () => go("https://x.com/Spagero71") },
     { label: "LinkedIn", hint: "Afolabi Ayomide", icon: Linkedin, run: () => go("https://www.linkedin.com/in/afolabi-ayomide-emmanuel-bba6b9367/") },
