@@ -11,6 +11,8 @@ const logoMap: Record<string, string> = {
   Celo: "/celo.png",
   Ethereum: "/ethereum.png",
   Starknet: "/starknet.png",
+  Mantle: "/mantle-logo.png",
+  Stellar: "/stellar-logo.png",
 };
 
 export default function ChainLogo({ chain, size = 28 }: Props) {
