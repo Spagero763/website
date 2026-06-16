@@ -23,7 +23,7 @@ const certificates: Certificate[] = [
   {
     title: "Claude Certified Architect Prep",
     issuer: "DevCompass",
-    date: "2026",
+    date: "Jun 2026",
     description:
       "Preparation program for Anthropic's Claude Certified Architect certification. Covers building production applications with Claude, the Claude API, prompt engineering, agents and tool use, and AI fluency.",
     image: "/claude-architect-certificate-devcompass.png",

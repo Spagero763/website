@@ -15,9 +15,9 @@ const socials = [
 ];
 
 const stats = [
-  { n: "7", l: "Products shipped" },
+  { n: "20+", l: "Projects shipped" },
   { n: "6", l: "Chains shipped" },
-  { n: "14", l: "Contracts in one protocol" },
+  { n: "200+", l: "Merged pull requests" },
 ];
 
 const chains = ["Avalanche", "Base", "Celo", "Starknet", "Mantle", "Stellar"];
