@@ -67,7 +67,7 @@ export default function Certificates() {
   return (
     <section id="certificates" className="py-24 border-t border-line">
       <div className="shell">
-        <SectionHeading index="05" label="Credentials" title="Certificates & training" />
+        <SectionHeading index="06" label="Credentials" title="Certificates & training" />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {certificates.map((cert, i) => (

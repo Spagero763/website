@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Search, User, FolderGit2, Wrench, Briefcase, Award, Mail,
+  Search, User, FolderGit2, GitPullRequest, Wrench, Briefcase, Award, Mail,
   Github, Twitter, Linkedin, Send, FileDown, CornerDownLeft,
 } from "lucide-react";
 
@@ -31,6 +31,7 @@ export default function CommandPalette() {
   const actions: Action[] = [
     { label: "About", hint: "Who I am", icon: User, run: () => go("#about") },
     { label: "Work", hint: "Selected projects", icon: FolderGit2, run: () => go("#projects") },
+    { label: "Open source", hint: "Drips Wave contributions", icon: GitPullRequest, run: () => go("#contributions") },
     { label: "Skills", hint: "What I work with", icon: Wrench, run: () => go("#skills") },
     { label: "Experience", hint: "Track record", icon: Briefcase, run: () => go("#experience") },
     { label: "Certificates", hint: "Credentials", icon: Award, run: () => go("#certificates") },

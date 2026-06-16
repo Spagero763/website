@@ -10,8 +10,8 @@ export default function CustomCursor() {
 
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const ringX = useSpring(x, { stiffness: 350, damping: 28, mass: 0.4 });
-  const ringY = useSpring(y, { stiffness: 350, damping: 28, mass: 0.4 });
+  const ringX = useSpring(x, { stiffness: 280, damping: 26, mass: 0.5 });
+  const ringY = useSpring(y, { stiffness: 280, damping: 26, mass: 0.5 });
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -45,17 +45,28 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* reticle ring */}
       <motion.div
         aria-hidden
         style={{ x: ringX, y: ringY }}
-        className="pointer-events-none fixed left-0 top-0 z-[100] -ml-4 -mt-4 h-8 w-8 rounded-full border border-white mix-blend-difference"
-        animate={{ scale: hovering ? 1.8 : down ? 0.7 : 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      />
+        className="pointer-events-none fixed left-0 top-0 z-[100] -ml-5 -mt-5 h-10 w-10"
+        animate={{ scale: hovering ? 1.7 : down ? 0.8 : 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      >
+        <div
+          className={`h-full w-full rounded-full border border-dashed transition-colors duration-200 ${
+            hovering ? "animate-[spin_3s_linear_infinite] border-accent bg-accent/10" : "animate-spin-slow border-accent/70"
+          }`}
+        />
+      </motion.div>
+
+      {/* core dot */}
       <motion.div
         aria-hidden
         style={{ x, y }}
-        className="pointer-events-none fixed left-0 top-0 z-[100] -ml-0.5 -mt-0.5 h-1 w-1 rounded-full bg-white mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[100] -ml-[3px] -mt-[3px] h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_2px_var(--accent)]"
+        animate={{ scale: hovering ? 0 : 1 }}
+        transition={{ duration: 0.15 }}
       />
     </>
   );
