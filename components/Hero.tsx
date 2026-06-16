@@ -15,12 +15,12 @@ const socials = [
 ];
 
 const stats = [
-  { n: "6+", l: "Live products" },
-  { n: "4", l: "Chains shipped" },
+  { n: "7", l: "Products shipped" },
+  { n: "6", l: "Chains shipped" },
   { n: "14", l: "Contracts in one protocol" },
 ];
 
-const chains = ["Avalanche", "Base", "Celo", "Starknet", "Ethereum", "Chainlink"];
+const chains = ["Avalanche", "Base", "Celo", "Starknet", "Mantle", "Stellar"];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 

@@ -6,19 +6,19 @@ import SectionHeading from "./ui/SectionHeading";
 const groups = [
   {
     title: "Smart contract development",
-    items: ["Solidity", "Cairo", "EVM internals", "Contract architecture", "Upgradeable contracts", "OpenZeppelin"],
+    items: ["Solidity", "Cairo", "Soroban (Rust)", "EVM internals", "Contract architecture", "Upgradeable contracts", "OpenZeppelin"],
   },
   {
     title: "Testing & security",
     items: ["Foundry", "Fuzz testing", "Fork testing", "Gas optimization", "Reentrancy protection", "Access control", "Commit-reveal schemes"],
   },
   {
-    title: "Web3 & integration",
-    items: ["Ethers.js", "Web3.js", "Wagmi", "Viem", "Frontend integration", "Deployment pipelines"],
+    title: "Web3, AI & integration",
+    items: ["Ethers.js", "Wagmi", "Viem", "Claude API & AI agents", "x402 payments", "Frontend integration", "Deployment pipelines"],
   },
   {
     title: "Chains",
-    items: ["Avalanche", "Base", "Celo", "Starknet", "Chainlink oracles"],
+    items: ["Avalanche", "Base", "Celo", "Starknet", "Mantle", "Stellar", "Chainlink oracles"],
   },
 ];
 
