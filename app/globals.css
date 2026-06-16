@@ -41,6 +41,11 @@ body {
 
 ::selection { background: rgba(124, 92, 255, 0.3); color: #fff; }
 
+body.cursor-none,
+body.cursor-none * {
+  cursor: none !important;
+}
+
 @layer components {
   .shell {
     width: 100%;

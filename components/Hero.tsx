@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Github, Twitter, Linkedin, Send, Download, ArrowUpRight } from "lucide-react";
 import Magnetic from "./ui/Magnetic";
 import CountUp from "./ui/CountUp";
+import { TypeAnimation } from "react-type-animation";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Spagero763", icon: Github },
@@ -66,10 +67,34 @@ export default function Hero() {
               on-chain systems people can trust.
             </motion.h1>
 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.18 }}
+              className="mt-5 font-mono text-sm text-muted"
+            >
+              <span className="text-accent">$</span>{" "}
+              <TypeAnimation
+                sequence={[
+                  "building secure smart contracts",
+                  2000,
+                  "auditing for vulnerabilities",
+                  2000,
+                  "shipping on EVM and Starknet",
+                  2000,
+                  "optimizing gas, every wei",
+                  2000,
+                ]}
+                speed={50}
+                repeat={Infinity}
+                className="text-fg"
+              />
+            </motion.div>
+
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease }}
+              transition={{ duration: 0.7, delay: 0.25, ease }}
               className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted"
             >
               Smart contract engineer shipping production identity protocols, payment
