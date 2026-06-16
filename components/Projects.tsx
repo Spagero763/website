@@ -1,27 +1,45 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import ChainLogo from "./ChainLogo";
 import SectionHeading from "./ui/SectionHeading";
 import Magnetic from "./ui/Magnetic";
 import Spotlight from "./ui/Spotlight";
+import Reveal from "./ui/Reveal";
 import { projects, type Project } from "@/data/projects";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Projects() {
+  const featured = projects.filter((p) => p.featured);
+  const more = projects.filter((p) => !p.featured);
+
   return (
     <section id="projects" className="py-24 border-t border-line">
       <div className="shell">
         <SectionHeading index="02" label="Selected work" title="Things I've shipped" />
 
         <div className="flex flex-col gap-24 sm:gap-28">
-          {projects.map((project, i) => (
-            <CaseStudy key={project.name} project={project} index={i} flipped={i % 2 === 1} />
+          {featured.map((project, i) => (
+            <CaseStudy key={project.slug} project={project} index={i} flipped={i % 2 === 1} />
           ))}
         </div>
+
+        {more.length > 0 && (
+          <div className="mt-24">
+            <Reveal className="mb-8">
+              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">More work</h3>
+            </Reveal>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              {more.map((project, i) => (
+                <MoreCard key={project.slug} project={project} delay={i * 0.08} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -38,9 +56,9 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
         className={`group relative ${flipped ? "lg:order-2" : ""}`}
       >
         <Spotlight className="card-hairline relative overflow-hidden rounded-2xl p-1.5 shadow-card">
-          <div className="relative overflow-hidden rounded-[0.9rem]">
+          <Link href={`/work/${project.slug}`} className="relative block overflow-hidden rounded-[0.9rem]">
             <Image
-              src={project.preview}
+              src={project.preview as string}
               alt={`${project.name} preview`}
               width={800}
               height={500}
@@ -57,7 +75,7 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
                 Live
               </span>
             )}
-          </div>
+          </Link>
         </Spotlight>
         <div className={`absolute -z-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl ${flipped ? "-left-6 -bottom-6" : "-right-6 -bottom-6"}`} />
       </motion.div>
@@ -102,19 +120,26 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
           ))}
         </div>
 
-        <div className="mt-7 flex items-center gap-3">
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <Magnetic strength={0.25}>
+            <Link
+              href={`/work/${project.slug}`}
+              className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-glow"
+            >
+              Read case study
+              <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </Magnetic>
           {project.live && (
-            <Magnetic strength={0.25}>
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:border-white/25"
-              >
-                <ExternalLink size={14} />
-                Live demo
-              </a>
-            </Magnetic>
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-2.5 text-sm text-muted transition-colors hover:text-fg"
+            >
+              <ExternalLink size={14} />
+              Live demo
+            </a>
           )}
           {project.github && (
             <a
@@ -130,5 +155,50 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
         </div>
       </motion.div>
     </article>
+  );
+}
+
+function MoreCard({ project, delay }: { project: Project; delay: number }) {
+  return (
+    <Reveal delay={delay} className="h-full">
+      <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-white/20">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ChainLogo chain={project.chain} size={16} />
+            <span className="font-mono text-xs text-faint">{project.chain}</span>
+          </div>
+          <span className="rounded-full border border-line bg-elevated px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted">
+            {project.category}
+          </span>
+        </div>
+
+        <Link href={`/work/${project.slug}`} className="font-display text-lg font-medium text-fg transition-colors hover:text-accent">
+          {project.name}
+        </Link>
+        <p className="mt-1 text-xs font-medium text-accent">{project.tagline}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{project.description}</p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-line pt-4">
+          <Link
+            href={`/work/${project.slug}`}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-fg transition-colors hover:text-accent"
+          >
+            Case study
+            <ArrowUpRight size={12} />
+          </Link>
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-fg"
+            >
+              <Github size={12} />
+              Source
+            </a>
+          )}
+        </div>
+      </Spotlight>
+    </Reveal>
   );
 }
