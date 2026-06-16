@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Menu, Search } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { href: "#about", label: "About" },
@@ -71,6 +72,7 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <button
             onClick={openPalette}
             aria-label="Open command menu"

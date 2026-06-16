@@ -50,7 +50,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-faint transition-colors hover:border-white/20 hover:text-fg"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-faint transition-colors hover:border-[color:var(--line-strong)] hover:text-fg"
               >
                 <Icon size={16} />
               </a>

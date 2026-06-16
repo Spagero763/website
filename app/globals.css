@@ -3,15 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --ink: #08080a;
-  --surface: #0e0e12;
-  --elevated: #16161c;
-  --fg: #ededf0;
-  --muted: #9a9aa6;
-  --faint: #6b6b76;
-  --line: rgba(255, 255, 255, 0.08);
-  --accent: #7c5cff;
+  --ink: #0a0a0f;
+  --surface: #111119;
+  --elevated: #1a1a24;
+  --fg: #f4f4f8;
+  --muted: #a2a2b2;
+  --faint: #6f6f80;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --accent: #8366ff;
   --accent-2: #22d3ee;
+}
+
+:root.light {
+  --ink: #f6f6f9;
+  --surface: #ffffff;
+  --elevated: #eeeef3;
+  --fg: #14141b;
+  --muted: #55555f;
+  --faint: #8a8a96;
+  --line: rgba(14, 14, 26, 0.10);
+  --line-strong: rgba(14, 14, 26, 0.22);
+  --accent: #6a48f5;
+  --accent-2: #0e9bb8;
 }
 
 * {
@@ -32,6 +46,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+:root.light .grain::before {
+  opacity: 0.02;
+  mix-blend-mode: multiply;
 }
 
 ::-webkit-scrollbar { width: 8px; }

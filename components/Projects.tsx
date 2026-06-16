@@ -161,7 +161,7 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
 function MoreCard({ project, delay }: { project: Project; delay: number }) {
   return (
     <Reveal delay={delay} className="h-full">
-      <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-white/20">
+      <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-[color:var(--line-strong)]">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ChainLogo chain={project.chain} size={16} />

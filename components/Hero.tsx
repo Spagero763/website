@@ -122,7 +122,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/50 px-6 py-3 text-sm font-semibold text-fg backdrop-blur transition-colors hover:border-white/25"
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/50 px-6 py-3 text-sm font-semibold text-fg backdrop-blur transition-colors hover:border-[color:var(--line-strong)]"
               >
                 <Download size={15} />
                 Download CV

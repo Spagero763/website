@@ -78,7 +78,7 @@ export default function Contributions() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {contributions.map((c, i) => (
             <Reveal key={c.project} delay={i * 0.08} className="h-full">
-              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-white/20">
+              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-[color:var(--line-strong)]">
                 <div className="mb-4 flex items-center justify-between">
                   <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
                     {c.ecosystem}

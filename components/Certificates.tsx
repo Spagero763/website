@@ -72,7 +72,7 @@ export default function Certificates() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {certificates.map((cert, i) => (
             <Reveal key={cert.title} delay={i * 0.08} className="h-full">
-              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-white/20">
+              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-[color:var(--line-strong)]">
                 {cert.image && (
                   <button
                     type="button"

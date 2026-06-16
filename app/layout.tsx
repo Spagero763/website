@@ -67,6 +67,11 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} font-sans antialiased grain`}
       >
         <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.add('light')}}catch(e){}`,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
