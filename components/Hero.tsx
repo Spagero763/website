@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Github, Twitter, Linkedin, Send, Download, ArrowUpRight } from "lucide-react";
 import Magnetic from "./ui/Magnetic";
+import CountUp from "./ui/CountUp";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Spagero763", icon: Github },
@@ -169,7 +170,7 @@ export default function Hero() {
         >
           {stats.map(({ n, l }) => (
             <div key={l}>
-              <div className="font-display text-2xl sm:text-3xl font-medium text-fg">{n}</div>
+              <CountUp value={n} className="font-display text-2xl sm:text-3xl font-medium text-fg" />
               <div className="mt-1 text-xs text-faint">{l}</div>
             </div>
           ))}

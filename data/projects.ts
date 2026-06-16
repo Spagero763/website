@@ -15,6 +15,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: "Gambit",
+    tagline: "Play classic games, stake USDm",
+    description:
+      "Skill-gaming platform on Celo where players stake stablecoins in 1v1 matches across five classic games. Smart contracts hold the pot in escrow and settle on-chain, with winners taking 95%. Free practice against bots, plus leaderboards and tournaments.",
+    chain: "Celo",
+    category: "EVM",
+    year: "2026",
+    metrics: [
+      { value: "95%", label: "Winner payout" },
+      { value: "5", label: "Classic games" },
+      { value: "USDm", label: "On-chain stakes" },
+    ],
+    tech: ["Solidity", "Celo", "USDm", "On-chain Escrow", "Next.js"],
+    preview: "/Gambit.png",
+    live: "https://www.bestgambit.live",
+    status: "live",
+  },
+  {
     name: "Veraflow",
     tagline: "On-chain identity & credit protocol",
     description:

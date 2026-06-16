@@ -6,6 +6,7 @@ import Image from "next/image";
 import ChainLogo from "./ChainLogo";
 import SectionHeading from "./ui/SectionHeading";
 import Magnetic from "./ui/Magnetic";
+import Spotlight from "./ui/Spotlight";
 import { projects, type Project } from "@/data/projects";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -36,7 +37,7 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
         transition={{ duration: 0.7, ease }}
         className={`group relative ${flipped ? "lg:order-2" : ""}`}
       >
-        <div className="card-hairline relative overflow-hidden rounded-2xl p-1.5 shadow-card">
+        <Spotlight className="card-hairline relative overflow-hidden rounded-2xl p-1.5 shadow-card">
           <div className="relative overflow-hidden rounded-[0.9rem]">
             <Image
               src={project.preview}
@@ -57,7 +58,7 @@ function CaseStudy({ project, index, flipped }: { project: Project; index: numbe
               </span>
             )}
           </div>
-        </div>
+        </Spotlight>
         <div className={`absolute -z-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl ${flipped ? "-left-6 -bottom-6" : "-right-6 -bottom-6"}`} />
       </motion.div>
 

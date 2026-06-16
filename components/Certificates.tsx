@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink, Award, Maximize2, X } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
+import Spotlight from "./ui/Spotlight";
 
 type Certificate = {
   title: string;
@@ -70,8 +71,8 @@ export default function Certificates() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {certificates.map((cert, i) => (
-            <Reveal key={cert.title} delay={i * 0.08}>
-              <div className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-white/20">
+            <Reveal key={cert.title} delay={i * 0.08} className="h-full">
+              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col overflow-hidden rounded-2xl transition-colors hover:border-white/20">
                 {cert.image && (
                   <button
                     type="button"
@@ -140,7 +141,7 @@ export default function Certificates() {
                     )}
                   </div>
                 </div>
-              </div>
+              </Spotlight>
             </Reveal>
           ))}
         </div>
