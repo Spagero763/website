@@ -194,8 +194,9 @@ export const projects: Project[] = [
       { value: "24/7", label: "Monitoring" },
     ],
     tech: ["TypeScript", "Mantle", "Solidity", "Security", "Webhooks"],
+    live: "https://chainsentinel-app.vercel.app/",
     github: "https://github.com/Spagero763/chainsentinel",
-    status: "completed",
+    status: "live",
     problem:
       "On-chain anomalies and risky contract behavior often go unnoticed until after funds are lost.",
     approach:

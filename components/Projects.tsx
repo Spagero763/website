@@ -186,6 +186,17 @@ function MoreCard({ project, delay }: { project: Project; delay: number }) {
             Case study
             <ArrowUpRight size={12} />
           </Link>
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-fg"
+            >
+              <ExternalLink size={12} />
+              Live
+            </a>
+          )}
           {project.github && (
             <a
               href={project.github}
