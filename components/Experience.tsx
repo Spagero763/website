@@ -1,9 +1,21 @@
 "use client";
 
+import Image from "next/image";
+import { ExternalLink } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
-const roles = [
+type Role = {
+  org: string;
+  role: string;
+  period: string;
+  current: boolean;
+  bullets: string[];
+  images?: string[];
+  event?: { label: string; href: string };
+};
+
+const roles: Role[] = [
   {
     org: "DevCompass",
     role: "Claude Certified Architect Program",
@@ -46,6 +58,8 @@ const roles = [
       "Led smart contract development for a blockchain-based bounty platform",
       "Owned on-chain reward mechanisms and contract architecture decisions",
     ],
+    images: ["/TEAM-LEAD1.jpg", "/TEAM-LEAD2.jpg", "/TEAM-LEAD3.jpg"],
+    event: { label: "Web3 Lagos Conference, Web3Bridge", href: "https://event.web3bridge.com/" },
   },
   {
     org: "Web3Nova",
@@ -89,6 +103,41 @@ export default function Experience() {
                       </li>
                     ))}
                   </ul>
+
+                  {r.images && (
+                    <div className="mt-5">
+                      <div className="flex flex-wrap gap-3">
+                        {r.images.map((src, idx) => (
+                          <a
+                            key={src}
+                            href={src}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group block h-24 w-32 overflow-hidden rounded-xl border border-line"
+                          >
+                            <Image
+                              src={src}
+                              alt={`${r.org} at the Web3 Lagos Conference ${idx + 1}`}
+                              width={256}
+                              height={192}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </a>
+                        ))}
+                      </div>
+                      {r.event && (
+                        <a
+                          href={r.event.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-fg"
+                        >
+                          <ExternalLink size={12} />
+                          {r.event.label}
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </Reveal>
