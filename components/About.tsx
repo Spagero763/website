@@ -29,8 +29,8 @@ export default function About() {
             <p className="mt-5 leading-relaxed text-muted">
               I specialize in Solidity and Cairo, with deep experience in EVM internals,
               rigorous Foundry testing, and gas optimization. I&apos;ve deployed contracts
-              across Base, Avalanche, Celo, and Starknet, and I&apos;m sharpening my auditing
-              skills through the Cyfrin Updraft security curriculum.
+              across Base, Avalanche, Celo, Starknet, Mantle, and Stellar, and built my
+              security foundation through the Cyfrin Updraft auditing curriculum.
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">

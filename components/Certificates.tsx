@@ -44,12 +44,12 @@ const certificates: Certificate[] = [
   {
     title: "Smart Contract Security & Auditing",
     issuer: "Cyfrin Updraft",
-    date: "2025 to Present",
+    date: "Jan 2025 - Jan 2026",
     description:
       "Comprehensive security curriculum covering auditing methodology, Solidity vulnerability patterns, formal verification, advanced Foundry techniques, and real audit case studies.",
     link: "https://profiles.cyfrin.io/u/afolabispagero71/achievements",
     linkLabel: "View achievements",
-    status: "in-progress",
+    status: "earned",
   },
 ];
 
