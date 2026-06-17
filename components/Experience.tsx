@@ -5,17 +5,6 @@ import SectionHeading from "./ui/SectionHeading";
 
 const roles = [
   {
-    org: "Paycrypt",
-    role: "Smart Contract Developer",
-    period: "Jul 2025 - Present",
-    current: true,
-    bullets: [
-      "Building and maintaining smart contracts for on-chain payment systems on Base",
-      "Working on transaction execution, user payment flows, and contract reliability",
-      "Focused on security and simplicity of production payment infrastructure",
-    ],
-  },
-  {
     org: "DevCompass",
     role: "Claude Certified Architect Program",
     period: "May 2026 - Jun 2026",
@@ -24,6 +13,17 @@ const roles = [
       "Selected into DevCompass's Claude Certified Architect program and certified in June 2026",
       "Built production AI applications with Claude, the Claude API, and agents",
       "Covered prompt engineering, tool use, and AI fluency for real-world systems",
+    ],
+  },
+  {
+    org: "Paycrypt",
+    role: "Smart Contract Developer",
+    period: "Jul 2025 - Mar 2026",
+    current: false,
+    bullets: [
+      "Built and maintained smart contracts for on-chain payment systems on Base",
+      "Worked on transaction execution, user payment flows, and contract reliability",
+      "Focused on security and simplicity of production payment infrastructure",
     ],
   },
   {
