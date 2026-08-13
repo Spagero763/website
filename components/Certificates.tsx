@@ -60,40 +60,40 @@ export default function Certificates() {
   }, []);
 
   return (
-    <section id="certificates" className="border-t border-line py-24">
+    <section id="certificates" className="border-t border-line py-28">
       <div className="shell">
         <SectionHeading index="07" label="Credentials" title="Certificates" />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {certificates.map((cert, i) => (
             <Reveal key={cert.title} delay={i * 0.08} className="h-full">
-              <div className="panel flex h-full flex-col overflow-hidden rounded-lg transition-colors hover:border-[color:var(--line-strong)]">
+              <div className="card card-hover flex h-full flex-col overflow-hidden rounded-2xl">
                 {cert.image && (
                   <button
                     type="button"
                     onClick={() => setLightbox(cert)}
                     aria-label={`View ${cert.title} certificate`}
-                    className="relative block h-44 w-full overflow-hidden border-b border-line bg-elevated"
+                    className="group relative block h-44 w-full overflow-hidden border-b border-line bg-page"
                   >
                     <Image
                       src={cert.image}
                       alt={`${cert.title} certificate`}
                       fill
-                      className="object-contain p-3"
+                      className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                   </button>
                 )}
 
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-display text-base font-medium text-fg">{cert.title}</h3>
-                  <p className="mt-1 font-mono text-[11px] text-accent">
+                <div className="flex flex-1 flex-col p-7">
+                  <h3 className="font-display text-lg font-medium text-fg">{cert.title}</h3>
+                  <p className="mt-1.5 font-mono text-[11px] text-accent">
                     {cert.issuer} · {cert.date}
                   </p>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-muted">
                     {cert.description}
                   </p>
 
-                  <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-line pt-4">
+                  <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-line pt-5">
                     {cert.image && (
                       <button
                         type="button"
@@ -109,7 +109,7 @@ export default function Certificates() {
                         href={cert.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-fg"
+                        className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-accent"
                       >
                         <ExternalLink size={12} />
                         {cert.linkLabel}
@@ -129,21 +129,23 @@ export default function Certificates() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(16,16,22,0.8)] p-4 sm:p-10"
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(12,12,16,0.82)] p-4 backdrop-blur-sm sm:p-10"
           >
             <button
               type="button"
               aria-label="Close"
-              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-md border border-line bg-page text-muted transition-colors hover:text-fg"
+              onClick={() => setLightbox(null)}
+              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-lg border border-ink-line text-ink-muted transition-colors hover:text-ink-fg"
             >
               <X size={18} />
             </button>
             <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-4xl"
             >
@@ -152,7 +154,7 @@ export default function Certificates() {
                 alt={`${lightbox.title} certificate`}
                 width={1400}
                 height={1000}
-                className="h-auto max-h-[85vh] w-full rounded-lg bg-page object-contain"
+                className="h-auto max-h-[85vh] w-full rounded-xl bg-surface object-contain shadow-lift"
               />
             </motion.div>
           </motion.div>

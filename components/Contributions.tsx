@@ -1,8 +1,9 @@
 "use client";
 
-import { GitPullRequest, ExternalLink, Github } from "lucide-react";
+import { GitPullRequest, ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
+import CountUp from "./ui/CountUp";
 
 type Contribution = {
   project: string;
@@ -64,42 +65,44 @@ const moreRepos = [
 ];
 
 const totals = [
-  { n: "110", l: "PRs merged into repos I don't own" },
-  { n: "64", l: "Repositories contributed to" },
-  { n: "292", l: "Merged PRs in total" },
+  { n: 110, l: "PRs merged into repos I don't own" },
+  { n: 64, l: "Repositories contributed to" },
+  { n: 292, l: "Merged PRs in total" },
 ];
 
 const prLink = (repo: string) => `${repo}/pulls?q=is%3Apr+is%3Amerged+author%3ASpagero763`;
 
 export default function Contributions() {
   return (
-    <section id="contributions" className="border-t border-line py-24">
+    <section id="contributions" className="ink py-28">
       <div className="shell">
-        <SectionHeading index="03" label="Open source" title="Code other teams merged" />
+        <SectionHeading index="03" label="Open source" title="Code other teams reviewed and merged" invert />
 
-        <Reveal className="-mt-4 mb-10">
-          <p className="max-w-2xl leading-relaxed text-muted">
-            Most of my work lives in other people&apos;s repositories, reviewed and merged by their
-            maintainers. A lot of it came through{" "}
+        <Reveal className="-mt-6 mb-12">
+          <p className="max-w-2xl leading-relaxed text-ink-muted">
+            The fastest way to judge an engineer is to read code someone else agreed to merge. A lot
+            of mine came through{" "}
             <a
               href={DRIPS}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent underline-offset-4 hover:underline"
+              className="font-medium text-ink-fg underline decoration-ink-line underline-offset-4 transition-colors hover:decoration-ink-fg"
             >
               Drips Wave
             </a>
-            , structured open-source sprints rewarded on-chain. Every number here links to the
-            merged pull requests.
+            , structured open-source sprints rewarded on-chain. Every number below links straight to
+            the merged pull requests.
           </p>
         </Reveal>
 
         <Reveal>
-          <dl className="mb-14 grid grid-cols-1 gap-6 border-y border-line py-7 sm:grid-cols-3">
+          <dl className="mb-16 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ink-line bg-ink-line sm:grid-cols-3">
             {totals.map(({ n, l }) => (
-              <div key={l}>
-                <dt className="font-display text-3xl font-medium tracking-tightest text-fg">{n}</dt>
-                <dd className="mt-1 text-xs leading-snug text-faint">{l}</dd>
+              <div key={l} className="bg-ink-surface px-7 py-8">
+                <dt className="font-display text-stat font-medium text-ink-fg">
+                  <CountUp to={n} />
+                </dt>
+                <dd className="mt-2 text-xs leading-snug text-ink-muted">{l}</dd>
               </div>
             ))}
           </dl>
@@ -108,27 +111,29 @@ export default function Contributions() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {contributions.map((c, i) => (
             <Reveal key={c.project} delay={i * 0.08} className="h-full">
-              <div className="panel flex h-full flex-col rounded-lg p-6 transition-colors hover:border-[color:var(--line-strong)]">
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <span className="font-mono text-xs uppercase tracking-[0.12em] text-accent">
+              <div className="flex h-full flex-col rounded-2xl border border-ink-line bg-ink-surface p-7 transition-colors hover:border-[rgba(255,255,255,0.26)]">
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted">
                     {c.ecosystem}
                   </span>
-                  <span className="inline-flex flex-shrink-0 items-center gap-1.5 rounded border border-line bg-elevated px-2 py-0.5 font-mono text-[11px] text-muted">
+                  <span className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-md border border-ink-line px-2 py-1 font-mono text-[11px] text-ink-fg">
                     <GitPullRequest size={11} />
                     {c.prs} merged
                   </span>
                 </div>
 
-                <h3 className="font-display text-lg font-medium text-fg">{c.project}</h3>
-                <p className="mt-1 text-sm text-muted">{c.about}</p>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-faint">{c.contribution}</p>
+                <h3 className="font-display text-xl font-medium text-ink-fg">{c.project}</h3>
+                <p className="mt-1.5 text-sm text-ink-muted">{c.about}</p>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-muted">
+                  {c.contribution}
+                </p>
 
-                <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-line pt-4">
+                <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-ink-line pt-5">
                   <a
                     href={prLink(c.repo)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-fg transition-colors hover:text-accent"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-fg transition-opacity hover:opacity-70"
                   >
                     <GitPullRequest size={12} />
                     My PRs
@@ -137,7 +142,7 @@ export default function Contributions() {
                     href={c.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-fg"
+                    className="inline-flex items-center gap-1.5 text-xs text-ink-muted transition-colors hover:text-ink-fg"
                   >
                     <ExternalLink size={12} />
                     Live
@@ -146,7 +151,7 @@ export default function Contributions() {
                     href={c.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors hover:text-fg"
+                    className="inline-flex items-center gap-1.5 text-xs text-ink-muted transition-colors hover:text-ink-fg"
                   >
                     <Github size={12} />
                     Repo
@@ -157,35 +162,43 @@ export default function Contributions() {
           ))}
         </div>
 
-        <Reveal className="mt-12">
-          <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-faint">
-            Other repositories
-          </h3>
-          <ul className="grid grid-cols-1 gap-x-10 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal className="mt-14">
+          <div className="mb-5 flex items-center gap-4">
+            <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted">
+              Other repositories
+            </h3>
+            <span className="h-px flex-1 bg-ink-line" />
+          </div>
+          <ul className="grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
             {moreRepos.map(({ repo, prs }) => (
-              <li key={repo} className="border-b border-line py-2.5">
+              <li key={repo} className="border-b border-ink-line">
                 <a
                   href={prLink(`https://github.com/${repo}`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-3"
+                  className="group flex items-center justify-between gap-3 py-3"
                 >
-                  <span className="truncate font-mono text-xs text-muted transition-colors group-hover:text-fg">
+                  <span className="truncate font-mono text-xs text-ink-muted transition-colors group-hover:text-ink-fg">
                     {repo}
                   </span>
-                  <span className="flex-shrink-0 font-mono text-[11px] text-accent">{prs} PRs</span>
+                  <span className="flex-shrink-0 font-mono text-[11px] text-ink-fg">{prs} PRs</span>
                 </a>
               </li>
             ))}
           </ul>
+
           <a
             href={ALL_PRS}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-fg transition-colors hover:text-accent"
+            className="group mt-9 inline-flex items-center gap-2 rounded-lg border border-ink-line px-5 py-3 text-sm font-semibold text-ink-fg transition-colors hover:bg-ink-surface"
           >
-            <Github size={15} />
+            <Github size={16} />
             Browse all 292 merged pull requests
+            <ArrowUpRight
+              size={15}
+              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </a>
         </Reveal>
       </div>

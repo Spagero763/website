@@ -39,12 +39,12 @@ export default async function CaseStudyPage({
   if (!project) notFound();
 
   return (
-    <main className="min-h-screen pb-24">
-      <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur">
+    <main className="min-h-screen pb-28">
+      <header className="sticky top-0 z-50 border-b border-line bg-page/80 backdrop-blur-md">
         <div className="shell flex items-center justify-between py-4">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg"
+            className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
           >
             <ArrowLeft size={15} />
             Back to work
@@ -55,41 +55,43 @@ export default async function CaseStudyPage({
         </div>
       </header>
 
-      <div className="shell pt-14">
+      <div className="shell pt-16">
         <Reveal>
-          <div className="mb-5 flex flex-wrap items-center gap-3 font-mono text-xs text-faint">
-            <span className="flex items-center gap-2 rounded-md border border-line bg-surface px-2.5 py-1.5">
-              <ChainLogo chain={project.chain} size={14} />
-              <span className="text-fg">{project.chain}</span>
+          <div className="mb-6 flex flex-wrap items-center gap-3 font-mono text-xs text-faint">
+            <span className="card flex items-center gap-2 rounded-lg px-3 py-2">
+              <ChainLogo chain={project.chain} size={15} />
+              <span className="font-medium text-fg">{project.chain}</span>
             </span>
             <span>{project.year}</span>
+            <span className="text-line-strong">/</span>
+            <span>{project.category}</span>
             {project.status === "live" && (
-              <span className="rounded-md border border-ok-line bg-ok-soft px-2 py-1 font-semibold uppercase tracking-wide text-ok">
+              <span className="rounded-lg border border-ok-line bg-ok-soft px-2.5 py-1 font-semibold uppercase tracking-wide text-ok">
                 Live
               </span>
             )}
             {project.status === "completed" && (
-              <span className="rounded-md border border-line bg-elevated px-2 py-1 uppercase tracking-wide text-muted">
+              <span className="rounded-lg border border-line bg-elevated px-2.5 py-1 uppercase tracking-wide text-muted">
                 Completed
               </span>
             )}
           </div>
 
-          <h1 className="font-display text-4xl font-medium tracking-tightest text-fg sm:text-5xl">
+          <h1 className="max-w-4xl font-display text-display font-medium text-fg balance">
             {project.name}
           </h1>
-          <p className="mt-3 text-lg font-semibold text-accent">{project.tagline}</p>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{project.description}</p>
+          <p className="mt-4 text-xl font-semibold text-accent">{project.tagline}</p>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{project.description}</p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             {project.live && (
               <a
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="group inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-card transition-all hover:bg-accent-hover hover:shadow-lift"
               >
-                Visit live
+                Visit live site
                 <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
               </a>
             )}
@@ -98,7 +100,7 @@ export default async function CaseStudyPage({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-line px-5 py-2.5 text-sm font-semibold text-fg transition-colors hover:border-[color:var(--line-strong)]"
+                className="card card-hover inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-fg"
               >
                 <Github size={15} />
                 Source code
@@ -108,53 +110,64 @@ export default async function CaseStudyPage({
         </Reveal>
 
         {project.preview && (
-          <Reveal delay={0.1} className="mt-12">
-            <div className="overflow-hidden rounded-lg border border-line">
-              <Image
-                src={project.preview}
-                alt={`${project.name} preview`}
-                width={1400}
-                height={875}
-                className="w-full object-cover"
-                priority
-              />
+          <Reveal delay={0.1} className="mt-14">
+            <div className="card rounded-2xl p-2.5">
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src={project.preview}
+                  alt={`${project.name} preview`}
+                  width={1400}
+                  height={875}
+                  className="w-full object-cover"
+                  priority
+                />
+              </div>
             </div>
           </Reveal>
         )}
 
         <Reveal delay={0.1}>
-          <dl className="mt-12 grid grid-cols-3 gap-6 border-y border-line py-7">
-            {project.metrics.map((m) => (
-              <div key={m.label}>
-                <dt className="font-display text-xl font-medium text-fg sm:text-2xl">{m.value}</dt>
-                <dd className="mt-1 text-xs text-faint">{m.label}</dd>
+          <dl className="card mt-14 grid grid-cols-1 rounded-2xl sm:grid-cols-3">
+            {project.metrics.map((m, i) => (
+              <div
+                key={m.label}
+                className={`px-7 py-7 ${i > 0 ? "border-t border-line sm:border-l sm:border-t-0" : ""}`}
+              >
+                <dt className="font-display text-stat font-medium text-fg">{m.value}</dt>
+                <dd className="mt-2 text-xs text-faint">{m.label}</dd>
               </div>
             ))}
           </dl>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.2fr]">
+        <div className="mt-16 grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.15fr]">
           <div className="space-y-10">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">The problem</h2>
-              <p className="mt-3 leading-relaxed text-muted">{project.problem}</p>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                The problem
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted">{project.problem}</p>
             </Reveal>
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">The approach</h2>
-              <p className="mt-3 leading-relaxed text-muted">{project.approach}</p>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                The approach
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted">{project.approach}</p>
             </Reveal>
             <Reveal>
               <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">My role</h2>
-              <p className="mt-3 leading-relaxed text-muted">{project.role}</p>
+              <p className="mt-4 leading-relaxed text-muted">{project.role}</p>
             </Reveal>
             {project.contracts && (
               <Reveal>
-                <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Contracts</h2>
-                <ul className="mt-3 flex flex-wrap gap-2">
+                <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                  Contracts
+                </h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {project.contracts.map((c) => (
                     <li
                       key={c}
-                      className="rounded border border-line bg-surface px-2 py-1 font-mono text-[11px] text-muted"
+                      className="rounded-md border border-line bg-surface px-2.5 py-1 font-mono text-[11px] text-muted"
                     >
                       {c}
                     </li>
@@ -166,23 +179,23 @@ export default async function CaseStudyPage({
 
           <Reveal>
             <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Highlights</h2>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-5 space-y-2.5">
               {project.highlights.map((h) => (
                 <li
                   key={h}
-                  className="flex items-start gap-3 rounded-md border border-line bg-surface p-3.5 text-sm leading-relaxed text-muted"
+                  className="card flex items-start gap-3 rounded-xl p-4 text-sm leading-relaxed text-muted"
                 >
-                  <Check size={14} className="mt-0.5 flex-shrink-0 text-accent" />
+                  <Check size={15} className="mt-0.5 flex-shrink-0 text-accent" />
                   {h}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-7 flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="rounded border border-line bg-surface px-2 py-1 font-mono text-[11px] text-muted"
+                  className="rounded-md border border-line bg-surface px-2.5 py-1 font-mono text-[11px] text-muted"
                 >
                   {t}
                 </span>
@@ -192,59 +205,64 @@ export default async function CaseStudyPage({
         </div>
 
         {project.deployments && (
-          <Reveal className="mt-16">
+          <Reveal className="mt-20">
             <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
               On-chain deployments
             </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+            <p className="mt-4 max-w-2xl leading-relaxed text-muted">
               Every address below is live on {project.deployments[0].network} and links to the block
               explorer, so you can read the deployed bytecode yourself.
             </p>
-            <div className="mt-5 overflow-x-auto">
-              <table className="w-full min-w-[34rem] border-collapse text-left">
-                <thead>
-                  <tr className="border-b border-line">
-                    <th className="pb-2 pr-4 font-mono text-[11px] uppercase tracking-wider text-faint">
-                      Contract
-                    </th>
-                    <th className="pb-2 pr-4 font-mono text-[11px] uppercase tracking-wider text-faint">
-                      Address
-                    </th>
-                    <th className="pb-2 font-mono text-[11px] uppercase tracking-wider text-faint">
-                      Network
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {project.deployments.map((d) => (
-                    <tr key={d.address} className="border-b border-line">
-                      <td className="py-3 pr-4 text-sm font-semibold text-fg">{d.name}</td>
-                      <td className="py-3 pr-4">
-                        <a
-                          href={d.explorer}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 font-mono text-xs text-accent hover:underline"
-                        >
-                          {short(d.address)}
-                          <ExternalLink size={11} />
-                        </a>
-                      </td>
-                      <td className="py-3 font-mono text-xs text-muted">{d.network}</td>
+            <div className="card mt-6 overflow-hidden rounded-2xl">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[34rem] border-collapse text-left">
+                  <thead>
+                    <tr className="border-b border-line bg-page">
+                      <th className="px-6 py-3.5 font-mono text-[11px] uppercase tracking-wider text-faint">
+                        Contract
+                      </th>
+                      <th className="px-6 py-3.5 font-mono text-[11px] uppercase tracking-wider text-faint">
+                        Address
+                      </th>
+                      <th className="px-6 py-3.5 font-mono text-[11px] uppercase tracking-wider text-faint">
+                        Network
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {project.deployments.map((d, i) => (
+                      <tr key={d.address} className={i > 0 ? "border-t border-line" : ""}>
+                        <td className="px-6 py-3.5 text-sm font-semibold text-fg">{d.name}</td>
+                        <td className="px-6 py-3.5">
+                          <a
+                            href={d.explorer}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 font-mono text-xs text-accent hover:underline"
+                          >
+                            {short(d.address)}
+                            <ExternalLink size={11} />
+                          </a>
+                        </td>
+                        <td className="px-6 py-3.5 font-mono text-xs text-muted">{d.network}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </Reveal>
         )}
 
-        <Reveal className="mt-16 border-t border-line pt-8">
+        <Reveal className="mt-20 border-t border-line pt-10">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-fg transition-colors hover:text-accent"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-fg transition-colors hover:text-accent"
           >
-            <ArrowLeft size={15} />
+            <ArrowLeft
+              size={15}
+              className="transition-transform group-hover:-translate-x-0.5"
+            />
             See all work
           </Link>
         </Reveal>

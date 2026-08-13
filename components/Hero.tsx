@@ -1,7 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { Github, Twitter, Linkedin, Send, Download, ArrowRight } from "lucide-react";
+import CountUp from "./ui/CountUp";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Spagero763", icon: Github },
@@ -11,89 +15,155 @@ const socials = [
 ];
 
 const stats = [
-  { n: "292", l: "Merged pull requests" },
-  { n: "64", l: "Repos contributed to" },
-  { n: "6", l: "Chains deployed on" },
+  { n: 292, l: "Pull requests merged" },
+  { n: 64, l: "Repos I contributed to" },
+  { n: 12, l: "Verifiable contract addresses" },
+  { n: 6, l: "Chains deployed on" },
 ];
 
-export default function Hero() {
-  return (
-    <section id="hero" className="border-b border-line pt-32 pb-16">
-      <div className="shell">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20 lg:items-start">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-faint">
-              Afolabi Ayomide Emmanuel
-            </p>
+const HEADLINE = "I build on-chain protocols and test them like an attacker.";
 
-            <h1 className="mt-5 font-display text-4xl font-medium leading-[1.08] tracking-tightest text-fg sm:text-5xl">
-              I build on-chain protocols and test them like an attacker.
+export default function Hero() {
+  const reduce = useReducedMotion();
+
+  return (
+    <section id="hero" className="relative overflow-hidden pb-20 pt-36 sm:pt-40">
+      <div className="shell">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.55fr_1fr] lg:gap-20">
+          <div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, ease }}
+              className="flex items-center gap-4"
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
+                Afolabi Ayomide Emmanuel
+              </span>
+              <motion.span
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.9, delay: 0.1, ease }}
+                className="h-px w-16 origin-left bg-line-strong"
+              />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+                Smart contract engineer
+              </span>
+            </motion.div>
+
+            <h1 className="mt-7 font-display text-display font-medium text-fg">
+              {reduce
+                ? HEADLINE
+                : HEADLINE.split(" ").map((word, i) => (
+                    <span key={word + i} className="inline-block overflow-hidden align-bottom">
+                      <motion.span
+                        className="inline-block"
+                        initial={{ y: "110%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.85, delay: 0.18 + i * 0.05, ease }}
+                      >
+                        {word}&nbsp;
+                      </motion.span>
+                    </span>
+                  ))}
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              Smart contract engineer working in Solidity and Cairo. I have shipped a
-              ten-contract identity and lending protocol, payment contracts running on Celo
-              and Base, and a security watcher on Mantle. Most of my recent work is merged
-              into other people&apos;s repositories, so you can read it.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.75, ease }}
+            >
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
+                I work in Solidity and Cairo. I have shipped a ten-contract identity and lending
+                protocol, payment contracts that ran in production on Base for nine months, and a
+                security watcher live on Mantle. Most of my recent code sits in other people&apos;s
+                repositories, reviewed and merged by their maintainers, so you can read all of it.
+              </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#projects"
-                className="group inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                See the work
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href="/AFOLABI_AYOMIDE_EMMANUEL.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-line px-5 py-3 text-sm font-semibold text-fg transition-colors hover:border-[color:var(--line-strong)]"
-              >
-                <Download size={15} />
-                Download CV
-              </a>
-            </div>
-
-            <div className="mt-9 flex items-center gap-1">
-              {socials.map(({ label, href, icon: Icon }) => (
+              <div className="mt-9 flex flex-wrap items-center gap-3">
                 <a
-                  key={label}
-                  href={href}
+                  href="#projects"
+                  className="group inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-card transition-all hover:bg-accent-hover hover:shadow-lift"
+                >
+                  See the work
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </a>
+                <a
+                  href="/AFOLABI_AYOMIDE_EMMANUEL.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-md text-faint transition-colors hover:bg-elevated hover:text-fg"
+                  className="card card-hover inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-fg"
                 >
-                  <Icon size={17} />
+                  <Download size={16} />
+                  Download CV
                 </a>
-              ))}
-            </div>
+              </div>
+
+              <p className="mt-7 text-sm text-faint">
+                Open to smart contract, protocol and security roles. Remote or relocation.
+              </p>
+
+              <div className="mt-6 flex items-center gap-2">
+                {socials.map(({ label, href, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="card card-hover flex h-10 w-10 items-center justify-center rounded-lg text-muted hover:text-accent"
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          <div className="order-first w-full max-w-[15rem] lg:order-none lg:max-w-none">
-            <div className="overflow-hidden rounded-lg border border-line">
-              <Image
-                src="/avatar.jpg"
-                alt="Afolabi Ayomide Emmanuel"
-                width={640}
-                height={720}
-                className="aspect-[4/5] w-full object-cover object-top"
-                priority
-              />
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.35, ease }}
+            className="order-first mx-auto w-full max-w-[16rem] lg:order-none lg:max-w-none"
+          >
+            <div className="card rounded-2xl p-2.5">
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/avatar.jpg"
+                  alt="Afolabi Ayomide Emmanuel"
+                  width={640}
+                  height={780}
+                  className="aspect-[4/5] w-full object-cover object-top"
+                  priority
+                />
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <dl className="mt-16 grid max-w-2xl grid-cols-3 gap-8 border-t border-line pt-8">
-          {stats.map(({ n, l }) => (
-            <div key={l}>
-              <dt className="font-display text-3xl font-medium tracking-tightest text-fg">{n}</dt>
-              <dd className="mt-1 text-xs leading-snug text-faint">{l}</dd>
+        <motion.dl
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.9, ease }}
+          className="card mt-20 grid grid-cols-2 rounded-2xl md:grid-cols-4"
+        >
+          {stats.map(({ n, l }, i) => (
+            <div
+              key={l}
+              className={`px-6 py-7 sm:px-8 ${i % 2 === 1 ? "border-l border-line" : ""} ${
+                i > 1 ? "border-t border-line md:border-t-0" : ""
+              } ${i > 0 ? "md:border-l md:border-line" : ""}`}
+            >
+              <dt className="font-display text-stat font-medium text-fg">
+                <CountUp to={n} />
+              </dt>
+              <dd className="mt-2 text-xs leading-snug text-faint">{l}</dd>
             </div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   );
