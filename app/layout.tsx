@@ -66,7 +66,7 @@ export default function RootLayout({
               name: "Afolabi Ayomide Emmanuel",
               url: SITE,
               jobTitle: "Smart Contract Engineer",
-              email: "afolabiayomide870@gmail.com",
+              email: "afolabispagero71@gmail.com",
               sameAs: [
                 "https://github.com/Spagero763",
                 "https://x.com/Spagero71",

@@ -93,7 +93,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <a
-            href="mailto:afolabiayomide870@gmail.com"
+            href="mailto:afolabispagero71@gmail.com"
             className="hidden items-center rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-hover hover:shadow-card md:inline-flex"
           >
             Get in touch
@@ -131,7 +131,7 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="mailto:afolabiayomide870@gmail.com"
+                href="mailto:afolabispagero71@gmail.com"
                 className="mt-3 rounded-lg bg-accent px-4 py-3 text-center text-sm font-semibold text-white"
                 onClick={() => setOpen(false)}
               >

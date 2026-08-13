@@ -14,7 +14,7 @@ const socials = [
   { label: "Telegram", href: "https://t.me/Spagerobaseeth", icon: Send },
 ];
 
-const EMAIL = "afolabiayomide870@gmail.com";
+const EMAIL = "afolabispagero71@gmail.com";
 
 export default function Contact() {
   return (
