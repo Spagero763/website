@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     "Blockchain Security",
   ],
   authors: [{ name: "Afolabi Ayomide Emmanuel" }],
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Afolabi Ayomide Emmanuel | Smart Contract Engineer",
     description:
