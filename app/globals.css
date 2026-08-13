@@ -3,29 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0a0a0f;
-  --surface: #111119;
-  --elevated: #1a1a24;
-  --fg: #f4f4f8;
-  --muted: #a2a2b2;
-  --faint: #6f6f80;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --accent: #8366ff;
-  --accent-2: #22d3ee;
-}
-
-:root.light {
-  --ink: #f6f6f9;
-  --surface: #ffffff;
-  --elevated: #eeeef3;
-  --fg: #14141b;
-  --muted: #55555f;
-  --faint: #8a8a96;
-  --line: rgba(14, 14, 26, 0.10);
-  --line-strong: rgba(14, 14, 26, 0.22);
-  --accent: #6a48f5;
-  --accent-2: #0e9bb8;
+  --page: #ffffff;
+  --surface: #fbfbfc;
+  --elevated: #f1f1f4;
+  --fg: #16161a;
+  --muted: #52525b;
+  --faint: #7d7d87;
+  --line: rgba(20, 20, 32, 0.11);
+  --line-strong: rgba(20, 20, 32, 0.26);
+  --accent: #2244bb;
+  --accent-soft: rgba(34, 68, 187, 0.08);
+  --ok: #04704e;
+  --ok-soft: #eefaf4;
+  --ok-line: rgba(4, 112, 78, 0.22);
 }
 
 * {
@@ -40,31 +30,20 @@ html {
 }
 
 body {
-  background: var(--ink);
+  background: var(--page);
   color: var(--fg);
   font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-:root.light .grain::before {
-  opacity: 0.02;
-  mix-blend-mode: multiply;
-}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: rgba(20, 20, 32, 0.18); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(20, 20, 32, 0.3); }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
-
-::selection { background: rgba(124, 92, 255, 0.3); color: #fff; }
-
-body.cursor-none,
-body.cursor-none * {
-  cursor: none !important;
-}
+::selection { background: rgba(34, 68, 187, 0.14); color: var(--fg); }
 
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -82,7 +61,7 @@ body.cursor-none * {
   background: var(--accent);
   color: #fff;
   padding: 0.5rem 1rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -94,37 +73,18 @@ body.cursor-none * {
 @layer components {
   .shell {
     width: 100%;
-    max-width: 72rem;
+    max-width: 68rem;
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
 
-  .text-gradient {
-    background: linear-gradient(120deg, var(--fg) 30%, var(--accent) 75%, var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .card-hairline {
+  .panel {
     border: 1px solid var(--line);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 40%),
-      var(--surface);
+    background: var(--surface);
   }
 }
 
 @layer utilities {
-  .grain::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;

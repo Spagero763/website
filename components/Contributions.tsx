@@ -3,7 +3,6 @@
 import { GitPullRequest, ExternalLink, Github } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
-import Spotlight from "./ui/Spotlight";
 
 type Contribution = {
   project: string;
@@ -16,6 +15,8 @@ type Contribution = {
 };
 
 const DRIPS = "https://www.drips.network/wave/users/3b1e45d0-0d8c-4c3a-b8a0-df4854374b32";
+const ALL_PRS =
+  "https://github.com/search?q=is%3Apr+is%3Amerged+author%3ASpagero763&type=pullrequests";
 
 const contributions: Contribution[] = [
   {
@@ -31,7 +32,7 @@ const contributions: Contribution[] = [
   {
     project: "Chioma",
     ecosystem: "Stellar",
-    about: "Open-source housing protocol on Stellar connecting landlords and renters.",
+    about: "Open-source housing protocol connecting landlords and renters.",
     contribution:
       "Security and data-privacy backend: KYC encryption at rest, data export, deletion and consent management, structured audit logging, and routing cleanup.",
     prs: 3,
@@ -41,7 +42,7 @@ const contributions: Contribution[] = [
   {
     project: "Lance",
     ecosystem: "Stellar / Soroban",
-    about: "Freelancer marketplace on Stellar with Soroban smart contract escrow.",
+    about: "Freelancer marketplace with Soroban smart contract escrow.",
     contribution:
       "Structured JSON logging and wallet-provider integration for the marketplace frontend.",
     prs: 2,
@@ -50,18 +51,36 @@ const contributions: Contribution[] = [
   },
 ];
 
-const prLink = (repo: string) =>
-  `${repo}/pulls?q=is%3Apr+is%3Amerged+author%3ASpagero763`;
+const moreRepos = [
+  { repo: "sublime247/mobile-money", prs: 8 },
+  { repo: "NFTopia-Foundation/nftopia-stellar", prs: 5 },
+  { repo: "Disciplr-Org/Disciplr-Contracts", prs: 5 },
+  { repo: "ancore-org/ancore", prs: 4 },
+  { repo: "Akanimoh12/Stellar-Tipz", prs: 4 },
+  { repo: "Nullifier-Systems/velo", prs: 3 },
+  { repo: "LabsCrypt/remitlend", prs: 3 },
+  { repo: "GalactiGuild/Stellar-Guilds", prs: 3 },
+  { repo: "Alien-Protocol/Alien-Protocol", prs: 3 },
+];
+
+const totals = [
+  { n: "110", l: "PRs merged into repos I don't own" },
+  { n: "64", l: "Repositories contributed to" },
+  { n: "292", l: "Merged PRs in total" },
+];
+
+const prLink = (repo: string) => `${repo}/pulls?q=is%3Apr+is%3Amerged+author%3ASpagero763`;
 
 export default function Contributions() {
   return (
-    <section id="contributions" className="py-24 border-t border-line">
+    <section id="contributions" className="border-t border-line py-24">
       <div className="shell">
-        <SectionHeading index="03" label="Open source" title="Contributions that shipped" />
+        <SectionHeading index="03" label="Open source" title="Code other teams merged" />
 
-        <Reveal className="mb-10 -mt-4">
+        <Reveal className="-mt-4 mb-10">
           <p className="max-w-2xl leading-relaxed text-muted">
-            Merged contributions to Stellar ecosystem projects through{" "}
+            Most of my work lives in other people&apos;s repositories, reviewed and merged by their
+            maintainers. A lot of it came through{" "}
             <a
               href={DRIPS}
               target="_blank"
@@ -70,20 +89,31 @@ export default function Contributions() {
             >
               Drips Wave
             </a>
-            , structured open-source sprints rewarded on-chain. Every contribution below links to
-            the merged pull requests, so the work is verifiable.
+            , structured open-source sprints rewarded on-chain. Every number here links to the
+            merged pull requests.
           </p>
+        </Reveal>
+
+        <Reveal>
+          <dl className="mb-14 grid grid-cols-1 gap-6 border-y border-line py-7 sm:grid-cols-3">
+            {totals.map(({ n, l }) => (
+              <div key={l}>
+                <dt className="font-display text-3xl font-medium tracking-tightest text-fg">{n}</dt>
+                <dd className="mt-1 text-xs leading-snug text-faint">{l}</dd>
+              </div>
+            ))}
+          </dl>
         </Reveal>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {contributions.map((c, i) => (
             <Reveal key={c.project} delay={i * 0.08} className="h-full">
-              <Spotlight tilt={4} className="card-hairline group flex h-full flex-col rounded-2xl p-6 transition-colors hover:border-[color:var(--line-strong)]">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
+              <div className="panel flex h-full flex-col rounded-lg p-6 transition-colors hover:border-[color:var(--line-strong)]">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <span className="font-mono text-xs uppercase tracking-[0.12em] text-accent">
                     {c.ecosystem}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-elevated px-2.5 py-1 font-mono text-[11px] text-muted">
+                  <span className="inline-flex flex-shrink-0 items-center gap-1.5 rounded border border-line bg-elevated px-2 py-0.5 font-mono text-[11px] text-muted">
                     <GitPullRequest size={11} />
                     {c.prs} merged
                   </span>
@@ -122,10 +152,42 @@ export default function Contributions() {
                     Repo
                   </a>
                 </div>
-              </Spotlight>
+              </div>
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-12">
+          <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-faint">
+            Other repositories
+          </h3>
+          <ul className="grid grid-cols-1 gap-x-10 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+            {moreRepos.map(({ repo, prs }) => (
+              <li key={repo} className="border-b border-line py-2.5">
+                <a
+                  href={prLink(`https://github.com/${repo}`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-3"
+                >
+                  <span className="truncate font-mono text-xs text-muted transition-colors group-hover:text-fg">
+                    {repo}
+                  </span>
+                  <span className="flex-shrink-0 font-mono text-[11px] text-accent">{prs} PRs</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={ALL_PRS}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-fg transition-colors hover:text-accent"
+          >
+            <Github size={15} />
+            Browse all 292 merged pull requests
+          </a>
+        </Reveal>
       </div>
     </section>
   );

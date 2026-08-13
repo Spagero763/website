@@ -24,9 +24,9 @@ const groups = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 border-t border-line">
+    <section id="skills" className="border-t border-line py-24">
       <div className="shell">
-        <SectionHeading index="04" label="Capabilities" title="What I work with" />
+        <SectionHeading index="04" label="Stack" title="What I work with" />
 
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2">
           {groups.map((g, i) => (
@@ -38,7 +38,7 @@ export default function Skills() {
                 {g.items.map((item) => (
                   <span
                     key={item}
-                    className="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm text-muted transition-colors hover:border-[color:var(--line-strong)] hover:text-fg"
+                    className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-muted transition-colors hover:border-[color:var(--line-strong)] hover:text-fg"
                   >
                     {item}
                   </span>

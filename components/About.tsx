@@ -1,61 +1,61 @@
 "use client";
 
 import Image from "next/image";
-import { Shield, Code2, Zap, Layers } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 
-const highlights = [
-  { icon: Shield, text: "Security-first. Every contract is designed to resist attack." },
-  { icon: Code2, text: "Deep EVM internals: storage, calldata, and execution flow." },
-  { icon: Zap, text: "Foundry fuzz, fork, and unit testing on every project." },
-  { icon: Layers, text: "Multi-chain across EVM ecosystems and Starknet with Cairo." },
+const facts = [
+  { k: "Languages", v: "Solidity, Cairo, TypeScript" },
+  { k: "Testing", v: "Foundry, unit and fuzz, fork tests" },
+  { k: "Chains", v: "Celo, Base, Avalanche, Mantle, Starknet, Stellar" },
+  { k: "Open source", v: "110 PRs merged into 64 external repos" },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="py-24 border-t border-line">
+    <section id="about" className="border-t border-line py-24">
       <div className="shell">
-        <SectionHeading index="01" label="About" title="Engineering on-chain systems that hold" />
+        <SectionHeading index="01" label="About" title="What I actually do" />
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           <Reveal>
             <p className="text-lg leading-relaxed text-muted">
-              I&apos;m a smart contract engineer focused on secure, production-ready blockchain
-              infrastructure. My work spans on-chain identity systems, payment layers, and
-              privacy-preserving trading protocols, always with security and gas efficiency at
-              the core.
+              I write the contracts that hold the money. That has meant an escrow that pays out a
+              1v1 match on Celo, a ten-contract identity and lending protocol on Avalanche, a
+              dark pool in Cairo that hides orders until settlement, and nine months of payment
+              contracts on Base for a product with real users.
             </p>
             <p className="mt-5 leading-relaxed text-muted">
-              I specialize in Solidity and Cairo, with deep experience in EVM internals,
-              rigorous Foundry testing, and gas optimization. I&apos;ve deployed contracts
-              across Base, Avalanche, Celo, Starknet, Mantle, and Stellar, and built my
-              security foundation through the Cyfrin Updraft auditing curriculum.
+              Before I ship anything I try to break it. That habit came from a year in the Cyfrin
+              Updraft security curriculum and from reviewing other people&apos;s code, which is
+              most of what I do now: 110 pull requests merged into repositories I don&apos;t own,
+              mostly Soroban and Solidity work on other teams&apos; protocols.
+            </p>
+            <p className="mt-5 leading-relaxed text-muted">
+              I&apos;m open to smart contract, protocol, and security roles. Everything on this
+              site links to source you can read or an address you can look up.
             </p>
 
-            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {highlights.map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10">
-                    <Icon size={15} className="text-accent" />
-                  </div>
-                  <span className="text-sm leading-relaxed text-muted">{text}</span>
+            <dl className="mt-10 divide-y divide-line border-y border-line">
+              {facts.map(({ k, v }) => (
+                <div key={k} className="grid grid-cols-1 gap-1 py-3.5 sm:grid-cols-[9rem_1fr]">
+                  <dt className="font-mono text-xs uppercase tracking-[0.14em] text-faint">{k}</dt>
+                  <dd className="text-sm text-muted">{v}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </Reveal>
 
-          <Reveal delay={0.15} className="relative mx-auto w-full max-w-xs">
-            <div className="card-hairline overflow-hidden rounded-2xl p-1.5 shadow-card">
+          <Reveal delay={0.12} className="mx-auto w-full max-w-xs">
+            <div className="overflow-hidden rounded-lg border border-line">
               <Image
                 src="/profile.jpg"
                 alt="Afolabi Ayomide Emmanuel"
                 width={480}
                 height={560}
-                className="aspect-[4/5] w-full rounded-[0.9rem] object-cover object-top"
+                className="aspect-[4/5] w-full object-cover object-top"
               />
             </div>
-            <div className="absolute -bottom-6 -left-6 -z-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
           </Reveal>
         </div>
       </div>

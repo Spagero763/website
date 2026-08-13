@@ -5,19 +5,10 @@ import Projects from "@/components/Projects";
 import Contributions from "@/components/Contributions";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
+import Education from "@/components/Education";
 import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import Marquee from "@/components/ui/Marquee";
-
-const marqueeItems = [
-  "Secure",
-  "Gas-optimized",
-  "Audited",
-  "On-chain",
-  "Production-ready",
-  "EVM & Starknet",
-];
 
 export default function Home() {
   return (
@@ -25,11 +16,11 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <Marquee items={marqueeItems} />
       <Projects />
       <Contributions />
       <Skills />
       <Experience />
+      <Education />
       <Certificates />
       <Contact />
       <Footer />

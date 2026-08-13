@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Menu, Search } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
+import { X, Menu } from "lucide-react";
 
 const links = [
   { href: "#about", label: "About" },
@@ -12,7 +11,7 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
-const sectionIds = ["about", "projects", "contributions", "skills", "experience", "certificates", "contact"];
+const sectionIds = ["about", "projects", "contributions", "skills", "experience", "education", "certificates", "contact"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -41,12 +40,10 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const openPalette = () => window.dispatchEvent(new Event("open-cmdk"));
-
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-line bg-ink/70 backdrop-blur-xl" : "bg-transparent"
+      className={`fixed left-0 right-0 top-0 z-50 transition-colors duration-200 ${
+        scrolled ? "border-b border-line bg-page/90 backdrop-blur" : "bg-transparent"
       }`}
     >
       <div className="shell flex items-center justify-between py-4">
@@ -72,20 +69,11 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <button
-            onClick={openPalette}
-            aria-label="Open command menu"
-            className="hidden items-center gap-2 rounded-full border border-line bg-surface/50 px-3 py-2 text-xs text-faint transition-colors hover:text-fg md:inline-flex"
-          >
-            <Search size={13} />
-            <kbd className="font-mono">⌘K</kbd>
-          </button>
           <a
             href="mailto:afolabiayomide870@gmail.com"
-            className="hidden items-center rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 md:inline-flex"
+            className="hidden items-center rounded-md border border-line px-4 py-2 text-sm font-semibold text-fg transition-colors hover:border-[color:var(--line-strong)] md:inline-flex"
           >
-            Hire me
+            Get in touch
           </a>
 
           <button
@@ -99,7 +87,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="flex flex-col gap-4 border-t border-line bg-ink/95 px-6 py-5 backdrop-blur-xl md:hidden">
+        <div className="flex flex-col gap-4 border-t border-line bg-page px-6 py-5 md:hidden">
           {links.map((l) => (
             <a
               key={l.href}
@@ -112,10 +100,10 @@ export default function Navbar() {
           ))}
           <a
             href="mailto:afolabiayomide870@gmail.com"
-            className="mt-1 rounded-full bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white"
+            className="mt-1 rounded-md bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white"
             onClick={() => setOpen(false)}
           >
-            Hire me
+            Get in touch
           </a>
         </div>
       )}

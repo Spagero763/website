@@ -32,8 +32,8 @@ export default function ChainLogo({ chain, size = 28 }: Props) {
 
   return (
     <div
-      className="rounded-full flex items-center justify-center text-[10px] font-bold"
-      style={{ width: size, height: size, background: "rgba(148,163,184,0.1)" }}
+      className="flex items-center justify-center rounded-full border border-line bg-elevated text-[10px] font-bold text-muted"
+      style={{ width: size, height: size }}
     >
       {chain.slice(0, 2).toUpperCase()}
     </div>

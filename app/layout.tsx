@@ -1,24 +1,14 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Instrument_Serif } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
-import CommandPalette from "@/components/CommandPalette";
-import CustomCursor from "@/components/CustomCursor";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -28,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: "Afolabi Ayomide Emmanuel | Smart Contract Engineer",
   description:
-    "Smart contract engineer building secure, production-ready on-chain systems across EVM chains and Starknet. Solidity, Cairo, Foundry, and a security-first approach.",
+    "Smart contract engineer working in Solidity and Cairo. Deployed protocols on Celo, Base, Avalanche, Mantle and Starknet, with 110 pull requests merged into other teams' repositories.",
   keywords: [
     "Smart Contract Engineer",
     "Solidity Developer",
@@ -42,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Afolabi Ayomide Emmanuel | Smart Contract Engineer",
     description:
-      "Building secure, production-ready on-chain systems across EVM chains and Starknet.",
+      "Solidity and Cairo engineer. Deployed contracts on Celo, Base, Avalanche, Mantle and Starknet.",
     url: SITE,
     siteName: "Afolabi Ayomide Emmanuel",
     type: "website",
@@ -51,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Afolabi Ayomide Emmanuel | Smart Contract Engineer",
     description:
-      "Building secure, production-ready on-chain systems across EVM chains and Starknet.",
+      "Solidity and Cairo engineer. Deployed contracts on Celo, Base, Avalanche, Mantle and Starknet.",
     creator: "@Spagero71",
   },
 };
@@ -64,13 +54,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} font-sans antialiased grain`}
+        className={`${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.add('light')}}catch(e){}`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -100,8 +85,6 @@ export default function RootLayout({
         <a href="#hero" className="skip-link">Skip to content</a>
         <SmoothScroll />
         <ScrollProgress />
-        <CommandPalette />
-        <CustomCursor />
         {children}
       </body>
     </html>
