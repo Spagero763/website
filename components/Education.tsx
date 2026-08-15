@@ -23,7 +23,7 @@ const entries: Entry[] = [
   {
     org: "Cyfrin Updraft",
     program: "Smart contract security and auditing",
-    period: "Jan 2025 - Jan 2026",
+    period: "Jan 2025 - Aug 2026",
     bullets: [
       "Solidity security, advanced Foundry testing, and vulnerability analysis on real codebases",
       "Worked through the Foundry, security, and assembly tracks",
