@@ -26,7 +26,7 @@ export default function Projects() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         const el = stage.current;
         if (!el) return;
         const images = gsap.utils.toArray<HTMLElement>("[data-stage-image]", el);
@@ -48,7 +48,10 @@ export default function Projects() {
           if (i === current) return;
           current = i;
           if (counter) counter.textContent = pad(i + 1);
-          dots.forEach((d, j) => d.classList.toggle("is-active", j === i));
+          dots.forEach((d, j) => {
+            d.classList.toggle("is-active", j === i);
+            if (j === i) d.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+          });
         };
         setCurrent(0);
 
@@ -56,6 +59,7 @@ export default function Projects() {
           scrollTrigger: {
             trigger: el,
             pin: true,
+            anticipatePin: 1,
             start: "top top",
             end: () => `+=${(n - 1) * 70}%`,
             scrub: 0.7,
@@ -80,6 +84,12 @@ export default function Projects() {
         }
         tl.to(ring, { strokeDashoffset: 0, duration: n - 1, ease: "none" }, 0);
 
+        const go = (i: number) => {
+          const st = trigger.current;
+          if (!st) return;
+          scrollToTarget(st.start + ((st.end - st.start) * i) / (n - 1));
+        };
+
         const onKey = (e: KeyboardEvent) => {
           const st = trigger.current;
           if (!st || !st.isActive) return;
@@ -87,7 +97,7 @@ export default function Projects() {
           const next = gsap.utils.clamp(0, n - 1, current + (e.key === "ArrowRight" ? 1 : -1));
           if (next === current) return;
           e.preventDefault();
-          scrollToTarget(st.start + ((st.end - st.start) * next) / (n - 1));
+          go(next);
         };
         window.addEventListener("keydown", onKey);
 
@@ -108,15 +118,14 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="border-t border-line pb-40">
-      {/* desktop: pinned stage */}
-      <div ref={stage} className="hidden lg:block">
-        <div className="shell flex h-[100svh] flex-col pb-7 pt-[calc(var(--nav-h)+1rem)]">
-          <div className="flex items-end justify-between gap-8 border-b border-line pb-5">
-            <div>
+    <section id="projects" className="border-t border-line pb-32 lg:pb-40">
+      <div ref={stage} data-stage>
+        <div className="shell flex h-[100svh] flex-col pb-5 pt-[calc(var(--nav-h)+0.25rem)] sm:pb-7 lg:pt-[calc(var(--nav-h)+1rem)]">
+          <div className="flex shrink-0 items-end justify-between gap-6 border-b border-line pb-4 lg:pb-5">
+            <div className="min-w-0">
               <Reveal variant="fade" className="flex items-center gap-4">
                 <span className="font-mono text-xs font-medium text-accent">02</span>
-                <Reveal as="span" variant="line" delay={0.15} className="h-px w-14 origin-left bg-line-strong">
+                <Reveal as="span" variant="line" delay={0.15} className="h-px w-10 origin-left bg-line-strong sm:w-14">
                   {null}
                 </Reveal>
                 <span className="eyebrow text-muted">Selected work</span>
@@ -124,17 +133,17 @@ export default function Projects() {
               <TextReveal
                 as="h2"
                 delay={0.1}
-                className="mt-4 font-display text-section font-medium text-fg"
+                className="mt-3 font-display text-2xl font-medium text-fg sm:text-3xl lg:mt-4 lg:text-section"
               >
                 Protocols I designed and shipped
               </TextReveal>
             </div>
 
-            <div className="flex items-center gap-5">
-              <span className="max-w-[11rem] text-right font-mono text-[11px] leading-snug text-faint">
+            <div className="flex shrink-0 items-center gap-4 lg:gap-5">
+              <span className="hidden max-w-[11rem] text-right font-mono text-[11px] leading-snug text-faint lg:block">
                 Scroll or use the arrow keys to move through the work
               </span>
-              <div className="relative h-[72px] w-[72px]">
+              <div className="relative h-14 w-14 lg:h-[72px] lg:w-[72px]">
                 <svg viewBox="0 0 72 72" className="h-full w-full -rotate-90">
                   <circle cx="36" cy="36" r={RADIUS} fill="none" stroke="var(--line)" strokeWidth="1.5" />
                   <circle
@@ -148,7 +157,7 @@ export default function Projects() {
                     strokeLinecap="round"
                   />
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-mono text-sm font-medium text-fg">
+                <span className="absolute inset-0 flex items-center justify-center font-mono text-xs font-medium text-fg lg:text-sm">
                   <span data-counter>01</span>
                   <span className="mx-0.5 text-line-strong">/</span>
                   <span className="text-faint">{pad(n)}</span>
@@ -157,8 +166,8 @@ export default function Projects() {
             </div>
           </div>
 
-          <div className="grid min-h-0 flex-1 grid-cols-[1.15fr_1fr] gap-12 pt-6 xl:gap-16">
-            <div className="relative overflow-hidden rounded-2xl border border-line bg-ink shadow-deck">
+          <div className="flex min-h-0 flex-1 flex-col gap-4 pt-4 lg:grid lg:grid-cols-[1.15fr_1fr] lg:gap-12 lg:pt-6 xl:gap-16">
+            <div className="relative min-h-[9rem] flex-1 overflow-hidden rounded-2xl border border-line bg-ink shadow-deck lg:min-h-0">
               {featured.map((p, i) => (
                 <div
                   key={p.slug}
@@ -171,17 +180,17 @@ export default function Projects() {
                       src={p.preview as string}
                       alt={`${p.name} preview`}
                       fill
-                      sizes="55vw"
+                      sizes="(min-width: 1024px) 55vw, 100vw"
                       priority={i === 0}
                       className="object-cover object-left-top"
                     />
                   </div>
-                  <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-line bg-surface/95 py-1.5 pl-2 pr-3 shadow-sm backdrop-blur">
+                  <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-line bg-surface/95 py-1 pl-1.5 pr-2.5 shadow-sm backdrop-blur lg:left-4 lg:top-4 lg:py-1.5 lg:pl-2 lg:pr-3">
                     <ChainLogo chain={p.chain} size={16} />
-                    <span className="font-mono text-xs font-medium text-fg">{p.chain}</span>
+                    <span className="font-mono text-[11px] font-medium text-fg lg:text-xs">{p.chain}</span>
                   </div>
                   {p.status === "live" && (
-                    <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-ok-line bg-ok-soft px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-ok shadow-sm">
+                    <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-ok-line bg-ok-soft px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ok shadow-sm lg:right-4 lg:top-4 lg:px-3 lg:py-1.5">
                       <span className="h-1.5 w-1.5 rounded-full bg-ok" />
                       Live
                     </span>
@@ -197,20 +206,16 @@ export default function Projects() {
               ))}
             </div>
 
-            <div className="relative overflow-hidden">
+            <div className="grid shrink-0 lg:self-center">
               {featured.map((p, i) => (
-                <div
-                  key={p.slug}
-                  data-stage-text
-                  className="absolute inset-0 flex flex-col justify-center"
-                >
+                <div key={p.slug} data-stage-text className="col-start-1 row-start-1">
                   <StageText project={p} index={i} total={n} />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 pt-6">
+          <div className="no-scrollbar -mx-6 flex shrink-0 gap-2 overflow-x-auto px-6 pt-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:gap-2.5 lg:px-0 lg:pt-6">
             {featured.map((p, i) => (
               <button
                 key={p.slug}
@@ -218,7 +223,7 @@ export default function Projects() {
                 data-stage-dot
                 onClick={() => jump(i)}
                 aria-label={`Go to ${p.name}`}
-                className="stage-dot group flex items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-[11px] text-faint transition-colors duration-300 hover:text-fg"
+                className="stage-dot group flex shrink-0 items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-[11px] text-faint transition-colors duration-300 hover:text-fg"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-current transition-transform duration-300 group-[.is-active]:scale-125" />
                 {p.name}
@@ -228,19 +233,17 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* mobile and tablet: swipe carousel */}
-      <div className="lg:hidden">
+      {/* reduced motion fallback, shown by CSS only when the stage is hidden */}
+      <div data-stage-fallback className="hidden">
         <div className="shell pt-24">
           <SectionHeading index="02" label="Selected work" title="Protocols I designed and shipped" className="mb-8" />
         </div>
-        <Reveal variant="fade">
-          <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:px-8">
-            {featured.map((p, i) => (
-              <MobileCard key={p.slug} project={p} index={i} total={n} />
-            ))}
-          </div>
-          <p className="shell mt-4 font-mono text-[11px] text-faint">Swipe to move through the work</p>
-        </Reveal>
+        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:px-8">
+          {featured.map((p, i) => (
+            <FallbackCard key={p.slug} project={p} index={i} total={n} />
+          ))}
+        </div>
+        <p className="shell mt-4 font-mono text-[11px] text-faint">Swipe to move through the work</p>
       </div>
 
       {more.length > 0 && (
@@ -255,9 +258,9 @@ export default function Projects() {
                 <TransitionLink
                   href={`/work/${project.slug}`}
                   label={project.name}
-                  className="group grid items-center gap-x-6 gap-y-3 py-6 sm:grid-cols-[3rem_1fr_auto]"
+                  className="group grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-3 py-6 sm:grid-cols-[3rem_1fr_auto]"
                 >
-                  <span className="font-mono text-xs text-faint">{pad(n + i + 1)}</span>
+                  <span className="hidden font-mono text-xs text-faint sm:block">{pad(n + i + 1)}</span>
                   <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <span className="font-display text-2xl font-medium text-fg transition-transform duration-500 ease-out group-hover:translate-x-1 sm:text-3xl">
                       {project.name}
@@ -288,11 +291,11 @@ export default function Projects() {
 
 function Links({ project, compact = false }: { project: Project; compact?: boolean }) {
   return (
-    <div className={`flex flex-wrap items-center ${compact ? "gap-x-5 gap-y-3" : "gap-x-6 gap-y-4"}`}>
+    <div className={`flex flex-wrap items-center ${compact ? "gap-x-5 gap-y-3" : "gap-x-5 gap-y-3 lg:gap-x-6 lg:gap-y-4"}`}>
       <TransitionLink
         href={`/work/${project.slug}`}
         label={project.name}
-        className={`btn btn-primary ${compact ? "!px-5 !py-3 text-[13px]" : ""}`}
+        className={`btn btn-primary ${compact ? "!px-5 !py-3 text-[13px]" : "!px-5 !py-3 text-[13px] lg:!px-6 lg:!py-3.5 lg:text-sm"}`}
       >
         Read case study
         <ArrowRight size={15} />
@@ -313,7 +316,9 @@ function Links({ project, compact = false }: { project: Project; compact?: boole
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="link-underline inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-fg"
+          className={`link-underline items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-fg ${
+            compact ? "inline-flex" : "hidden sm:inline-flex"
+          }`}
         >
           <Github size={14} />
           Source
@@ -326,7 +331,7 @@ function Links({ project, compact = false }: { project: Project; compact?: boole
 function StageText({ project, index, total }: { project: Project; index: number; total: number }) {
   return (
     <div>
-      <div className="flex items-center justify-between font-mono text-xs text-faint">
+      <div className="flex items-center justify-between font-mono text-[11px] text-faint lg:text-xs">
         <span>
           <span className="font-medium text-accent">{pad(index + 1)}</span>
           <span className="mx-1.5 text-line-strong">/</span>
@@ -337,24 +342,24 @@ function StageText({ project, index, total }: { project: Project; index: number;
         </span>
       </div>
 
-      <h3 className="mt-6 font-display text-5xl font-medium tracking-tightest text-fg xl:text-6xl">
+      <h3 className="mt-3 font-display text-3xl font-medium tracking-tightest text-fg sm:text-4xl lg:mt-6 lg:text-5xl xl:text-6xl">
         {project.name}
       </h3>
-      <p className="mt-3 text-base font-semibold text-accent">{project.tagline}</p>
-      <p className="mt-4 max-w-lg leading-relaxed text-muted pretty line-clamp-3 xl:line-clamp-4">
+      <p className="mt-1.5 text-sm font-semibold text-accent lg:mt-3 lg:text-base">{project.tagline}</p>
+      <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted pretty line-clamp-2 sm:line-clamp-3 lg:mt-4 lg:text-base xl:line-clamp-4 [@media(max-height:720px)]:hidden lg:[@media(max-height:720px)]:block">
         {project.description}
       </p>
 
-      <dl className="mt-6 grid grid-cols-3 gap-5 border-t border-line pt-5">
+      <dl className="mt-3 grid grid-cols-3 gap-4 border-t border-line pt-3 lg:mt-6 lg:gap-5 lg:pt-5">
         {project.metrics.map((m) => (
           <div key={m.label}>
-            <dt className="font-display text-2xl font-medium tracking-tightest text-fg">{m.value}</dt>
-            <dd className="mt-1 text-[11px] leading-tight text-faint">{m.label}</dd>
+            <dt className="font-display text-xl font-medium tracking-tightest text-fg lg:text-2xl">{m.value}</dt>
+            <dd className="mt-0.5 text-[10px] leading-tight text-faint lg:mt-1 lg:text-[11px]">{m.label}</dd>
           </div>
         ))}
       </dl>
 
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-4 hidden flex-wrap gap-2 sm:flex lg:mt-5">
         {project.deployments && (
           <p className="inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-3 py-1.5 font-mono text-[11px] font-medium text-accent">
             <FileCode2 size={12} />
@@ -373,14 +378,14 @@ function StageText({ project, index, total }: { project: Project; index: number;
         ))}
       </div>
 
-      <div className="mt-7">
+      <div className="mt-3 lg:mt-7">
         <Links project={project} />
       </div>
     </div>
   );
 }
 
-function MobileCard({ project, index, total }: { project: Project; index: number; total: number }) {
+function FallbackCard({ project, index, total }: { project: Project; index: number; total: number }) {
   return (
     <article className="card flex w-[84vw] max-w-sm shrink-0 snap-center flex-col overflow-hidden rounded-2xl">
       <TransitionLink
@@ -395,18 +400,7 @@ function MobileCard({ project, index, total }: { project: Project; index: number
           sizes="84vw"
           className="object-cover object-left-top"
         />
-        <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-line bg-surface/95 py-1 pl-1.5 pr-2.5 shadow-sm backdrop-blur">
-          <ChainLogo chain={project.chain} size={14} />
-          <span className="font-mono text-[11px] font-medium text-fg">{project.chain}</span>
-        </div>
-        {project.status === "live" && (
-          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-ok-line bg-ok-soft px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ok">
-            <span className="h-1.5 w-1.5 rounded-full bg-ok" />
-            Live
-          </span>
-        )}
       </TransitionLink>
-
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-center justify-between font-mono text-[11px] text-faint">
           <span>
@@ -416,21 +410,9 @@ function MobileCard({ project, index, total }: { project: Project; index: number
           </span>
           <span>{project.year}</span>
         </div>
-        <h3 className="mt-4 font-display text-3xl font-medium tracking-tightest text-fg">
-          {project.name}
-        </h3>
+        <h3 className="mt-4 font-display text-3xl font-medium tracking-tightest text-fg">{project.name}</h3>
         <p className="mt-1.5 text-sm font-semibold text-accent">{project.tagline}</p>
         <p className="mt-3 text-sm leading-relaxed text-muted line-clamp-3">{project.description}</p>
-
-        <dl className="mt-5 grid grid-cols-3 gap-3 border-t border-line pt-4">
-          {project.metrics.map((m) => (
-            <div key={m.label}>
-              <dt className="font-display text-xl font-medium tracking-tightest text-fg">{m.value}</dt>
-              <dd className="mt-0.5 text-[10px] leading-tight text-faint">{m.label}</dd>
-            </div>
-          ))}
-        </dl>
-
         <div className="mt-6">
           <Links project={project} compact />
         </div>

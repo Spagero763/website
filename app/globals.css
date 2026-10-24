@@ -188,6 +188,10 @@ html.has-cursor [role="button"] {
     transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
   }
 
+  .btn:active {
+    transform: scale(0.97);
+  }
+
   .btn::before {
     content: "";
     position: absolute;
@@ -321,6 +325,16 @@ html.has-cursor [role="button"] {
 .stage-dot.is-active {
   color: var(--fg);
   border-color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-stage] {
+    display: none !important;
+  }
+
+  [data-stage-fallback] {
+    display: block !important;
+  }
 }
 
 @keyframes marquee {
