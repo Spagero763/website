@@ -1,29 +1,28 @@
+import { IntroProvider } from "@/components/Intro";
+import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Contributions from "@/components/Contributions";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Education from "@/components/Education";
-import Certificates from "@/components/Certificates";
+import Background from "@/components/Background";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <IntroProvider>
+      <Preloader />
       <Navbar />
-      <Hero />
-      <About />
-      <Projects />
-      <Contributions />
-      <Skills />
-      <Experience />
-      <Education />
-      <Certificates />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <Contributions />
+        <Background />
+        <Contact />
+      </main>
       <Footer />
-    </main>
+    </IntroProvider>
   );
 }

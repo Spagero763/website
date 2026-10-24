@@ -1,45 +1,60 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
 
 type Props = {
   to: number;
   duration?: number;
   suffix?: string;
   className?: string;
+  play?: boolean;
+  mode?: "scroll" | "load";
+  delay?: number;
 };
 
-export default function CountUp({ to, duration = 1.2, suffix = "", className }: Props) {
+export default function CountUp({
+  to,
+  duration = 1.6,
+  suffix = "",
+  className,
+  play = true,
+  mode = "scroll",
+  delay = 0,
+}: Props) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [value, setValue] = useState(0);
 
-  useEffect(() => {
-    if (!inView) return;
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      if (reducedMotion()) {
+        el.textContent = `${to}${suffix}`;
+        return;
+      }
+      if (mode === "load" && !play) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setValue(to);
-      return;
-    }
-
-    let frame = 0;
-    const start = performance.now();
-
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / (duration * 1000), 1);
-      setValue(Math.round(to * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [inView, to, duration]);
+      const state = { v: 0 };
+      const vars: gsap.TweenVars = {
+        v: to,
+        duration,
+        delay,
+        ease: "power3.out",
+        onUpdate: () => {
+          el.textContent = `${Math.round(state.v)}${suffix}`;
+        },
+      };
+      if (mode === "scroll") {
+        vars.scrollTrigger = { trigger: el, start: "top 90%", once: true };
+      }
+      gsap.to(state, vars);
+    },
+    { dependencies: [play, to] }
+  );
 
   return (
     <span ref={ref} className={className}>
-      {value}
-      {suffix}
+      0{suffix}
     </span>
   );
 }

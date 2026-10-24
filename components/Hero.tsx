@@ -1,169 +1,266 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
-import { Github, Twitter, Linkedin, Send, Download, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
+import { gsap, SplitText, useGSAP, reducedMotion } from "@/lib/gsap";
+import { useIntro } from "./Intro";
 import CountUp from "./ui/CountUp";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const socials = [
-  { label: "GitHub", href: "https://github.com/Spagero763", icon: Github },
-  { label: "Twitter", href: "https://x.com/Spagero71", icon: Twitter },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/afolabi-ayomide-emmanuel-bba6b9367/", icon: Linkedin },
-  { label: "Telegram", href: "https://t.me/Spagerobaseeth", icon: Send },
-];
+import Magnetic from "./ui/Magnetic";
+import ChainMarquee from "./ChainMarquee";
+import TransitionLink from "./TransitionLink";
+import { CV } from "@/data/site";
 
 const stats = [
-  { n: 292, l: "Pull requests merged" },
-  { n: 64, l: "Repos I contributed to" },
-  { n: 12, l: "Verifiable contract addresses" },
-  { n: 6, l: "Chains deployed on" },
+  {
+    n: 292,
+    l: "Pull requests merged",
+    href: "https://github.com/search?q=is%3Apr+is%3Amerged+author%3ASpagero763&type=pullrequests",
+    external: true,
+  },
+  { n: 64, l: "Repos contributed to", href: "https://github.com/Spagero763", external: true },
+  { n: 12, l: "Verifiable contract addresses", href: "/#projects", external: false },
+  { n: 6, l: "Chains deployed on", href: "/#projects", external: false },
 ];
 
-const HEADLINE = "I build on-chain protocols and test them like an attacker.";
-
 export default function Hero() {
-  const reduce = useReducedMotion();
+  const { done } = useIntro();
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    (_, contextSafe) => {
+      const el = root.current;
+      if (!el) return;
+
+      const q = gsap.utils.selector(el);
+      const ready = () => el.querySelectorAll("[data-h]").forEach((n) => n.classList.add("is-ready"));
+
+      if (reducedMotion()) {
+        ready();
+        return;
+      }
+      if (!done) return;
+
+      let split: SplitText | null = null;
+      let cancelled = false;
+
+      const run = contextSafe!(() => {
+        if (cancelled) return;
+        const h1 = q("h1")[0];
+        split = SplitText.create(h1, {
+          type: "lines",
+          mask: "lines",
+          linesClass: "split-line",
+          autoSplit: true,
+          onSplit(self) {
+            gsap.set(self.lines, { yPercent: 110 });
+            ready();
+            return gsap
+              .timeline({ defaults: { ease: "power4.out" } })
+              .fromTo(
+                q("[data-meta] > *"),
+                { opacity: 0, y: 10 },
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.08 },
+                0
+              )
+              .fromTo(
+                q("[data-rule]"),
+                { scaleX: 0 },
+                { scaleX: 1, duration: 1.1, ease: "power4.inOut" },
+                0.1
+              )
+              .to(self.lines, { yPercent: 0, duration: 1.3, stagger: 0.1 }, 0.15)
+              .fromTo(
+                q("[data-portrait]"),
+                { clipPath: "inset(100% 0 0 0)" },
+                { clipPath: "inset(0% 0 0 0)", duration: 1.4, ease: "power4.inOut" },
+                0.3
+              )
+              .fromTo(
+                q("[data-portrait] img"),
+                { scale: 1.3 },
+                { scale: 1, duration: 1.8, ease: "power3.out" },
+                0.3
+              )
+              .fromTo(
+                q("[data-copy] > *"),
+                { opacity: 0, y: 24 },
+                { opacity: 1, y: 0, duration: 1, stagger: 0.1 },
+                0.75
+              )
+              .fromTo(
+                q("[data-stats] > *"),
+                { opacity: 0, y: 18 },
+                { opacity: 1, y: 0, duration: 0.9, stagger: 0.08 },
+                1
+              )
+              .fromTo(
+                q("[data-strip]"),
+                { opacity: 0 },
+                { opacity: 1, duration: 1 },
+                1.2
+              );
+          },
+        });
+      });
+
+      document.fonts.ready.then(run);
+
+      gsap.to(q("[data-portrait]"), {
+        yPercent: 14,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
+      });
+
+      gsap.to(q("[data-hero-copy]"), {
+        yPercent: -8,
+        opacity: 0.4,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
+      });
+
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const portrait = q("[data-portrait]")[0] as HTMLElement | undefined;
+        const frame = q("[data-portrait-frame]")[0] as HTMLElement | undefined;
+        if (portrait && frame) {
+          gsap.set(frame, { transformPerspective: 900 });
+          const rx = gsap.quickTo(frame, "rotationX", { duration: 0.7, ease: "power3.out" });
+          const ry = gsap.quickTo(frame, "rotationY", { duration: 0.7, ease: "power3.out" });
+          const tilt = (e: MouseEvent) => {
+            const r = portrait.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            ry(px * 10);
+            rx(-py * 10);
+          };
+          const reset = () => {
+            rx(0);
+            ry(0);
+          };
+          portrait.addEventListener("mousemove", tilt);
+          portrait.addEventListener("mouseleave", reset);
+        }
+      }
+
+      return () => {
+        cancelled = true;
+        split?.revert();
+      };
+    },
+    { scope: root, dependencies: [done] }
+  );
 
   return (
-    <section id="hero" className="relative overflow-hidden pb-20 pt-36 sm:pt-40">
-      <div className="shell">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.55fr_1fr] lg:gap-20">
-          <div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, ease }}
-              className="flex items-center gap-4"
-            >
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-                Afolabi Ayomide Emmanuel
-              </span>
-              <motion.span
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, delay: 0.1, ease }}
-                className="h-px w-16 origin-left bg-line-strong"
-              />
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-                Smart contract engineer
-              </span>
-            </motion.div>
-
-            <h1 className="mt-7 font-display text-display font-medium text-fg">
-              {reduce
-                ? HEADLINE
-                : HEADLINE.split(" ").map((word, i) => (
-                    <span key={word + i} className="inline-block overflow-hidden align-bottom">
-                      <motion.span
-                        className="inline-block"
-                        initial={{ y: "110%" }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 0.85, delay: 0.18 + i * 0.05, ease }}
-                      >
-                        {word}&nbsp;
-                      </motion.span>
-                    </span>
-                  ))}
-            </h1>
-
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.75, ease }}
-            >
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
-                I work in Solidity and Cairo. I have shipped a ten-contract identity and lending
-                protocol, payment contracts that ran in production on Base for nine months, and a
-                security watcher live on Mantle. Most of my recent code sits in other people&apos;s
-                repositories, reviewed and merged by their maintainers, so you can read all of it.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a
-                  href="#projects"
-                  className="group inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-card transition-all hover:bg-accent-hover hover:shadow-lift"
-                >
-                  See the work
-                  <ArrowRight
-                    size={16}
-                    className="transition-transform group-hover:translate-x-0.5"
-                  />
-                </a>
-                <a
-                  href="/AFOLABI_AYOMIDE_EMMANUEL.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="card card-hover inline-flex items-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-fg"
-                >
-                  <Download size={16} />
-                  Download CV
-                </a>
-              </div>
-
-              <p className="mt-7 text-sm text-faint">
-                Open to smart contract, protocol and security roles. Remote or relocation.
-              </p>
-
-              <div className="mt-6 flex items-center gap-2">
-                {socials.map(({ label, href, icon: Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="card card-hover flex h-10 w-10 items-center justify-center rounded-lg text-muted hover:text-accent"
-                  >
-                    <Icon size={16} />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
+    <section id="hero" ref={root} className="relative flex min-h-[100svh] flex-col justify-end">
+      <div className="shell pt-32 sm:pt-36" data-hero-copy>
+        <div data-h className="flex items-center gap-4" data-reveal>
+          <div data-meta className="contents">
+            <span className="eyebrow text-muted">Afolabi Ayomide Emmanuel</span>
+            <span data-rule className="h-px w-12 origin-left bg-line-strong sm:w-20" />
+            <span className="eyebrow text-accent">Smart contract engineer</span>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35, ease }}
-            className="order-first mx-auto w-full max-w-[16rem] lg:order-none lg:max-w-none"
-          >
-            <div className="card rounded-2xl p-2.5">
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  src="/avatar.jpg"
-                  alt="Afolabi Ayomide Emmanuel"
-                  width={640}
-                  height={780}
-                  className="aspect-[4/5] w-full object-cover object-top"
-                  priority
-                />
-              </div>
-            </div>
-          </motion.div>
         </div>
 
-        <motion.dl
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9, ease }}
-          className="card mt-20 grid grid-cols-2 rounded-2xl md:grid-cols-4"
-        >
-          {stats.map(({ n, l }, i) => (
+        <div className="mt-8 grid items-end gap-10 lg:grid-cols-[1fr_17rem] lg:gap-16 xl:grid-cols-[1fr_19rem]">
+          <h1
+            data-h
+            data-split
+            className="font-display text-hero font-medium text-fg balance"
+          >
+            I build on-chain protocols and test them like an attacker.
+          </h1>
+
+          <div
+            data-portrait
+            className="order-first w-32 sm:w-40 lg:order-none lg:w-full"
+            style={{ clipPath: "inset(0 0 0% 0)" }}
+          >
             <div
-              key={l}
-              className={`px-6 py-7 sm:px-8 ${i % 2 === 1 ? "border-l border-line" : ""} ${
-                i > 1 ? "border-t border-line md:border-t-0" : ""
-              } ${i > 0 ? "md:border-l md:border-line" : ""}`}
+              data-portrait-frame
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-card"
             >
-              <dt className="font-display text-stat font-medium text-fg">
-                <CountUp to={n} />
-              </dt>
-              <dd className="mt-2 text-xs leading-snug text-faint">{l}</dd>
+              <Image
+                src="/avatar.jpg"
+                alt="Afolabi Ayomide Emmanuel"
+                fill
+                sizes="(min-width: 1024px) 19rem, 10rem"
+                className="object-cover object-top"
+                priority
+              />
             </div>
-          ))}
-        </motion.dl>
+          </div>
+        </div>
+
+        <div
+          data-h
+          data-reveal
+          data-copy
+          className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_1fr] lg:items-start"
+        >
+          <p className="max-w-xl text-lg leading-relaxed text-muted pretty">
+            I work in Solidity and Cairo. I have shipped a ten-contract identity and lending
+            protocol, payment contracts that ran in production on Base for nine months, and a
+            security watcher live on Mantle. Most of my recent code sits in other people&apos;s
+            repositories, reviewed and merged by their maintainers, so you can read all of it.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+            <Magnetic>
+              <TransitionLink href="/#projects" className="btn btn-primary">
+                See the work
+                <ArrowDown size={15} />
+              </TransitionLink>
+            </Magnetic>
+            <Magnetic>
+              <a href={CV} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                <Download size={15} />
+                Download CV
+              </a>
+            </Magnetic>
+          </div>
+        </div>
+      </div>
+
+      <div className="shell mt-16 lg:mt-20">
+        <dl
+          data-h
+          data-reveal
+          data-stats
+          className="grid grid-cols-2 gap-x-6 border-t border-line md:grid-cols-4"
+        >
+          {stats.map(({ n, l, href, external }, i) => {
+            const inner = (
+              <>
+                <dt className="flex items-start font-display text-stat font-medium text-fg">
+                  <CountUp to={n} suffix="+" mode="load" play={done} delay={1.1 + i * 0.1} />
+                </dt>
+                <dd className="mt-2 flex items-center gap-1.5 text-xs leading-snug text-faint transition-colors duration-300 group-hover:text-fg">
+                  {l}
+                  <ArrowUpRight
+                    size={12}
+                    className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                  />
+                </dd>
+              </>
+            );
+            const cls = `group block py-7 ${i % 2 === 1 ? "pl-6 md:pl-0" : ""} ${
+              i > 0 ? "md:border-l md:border-line md:pl-6" : ""
+            } ${i > 1 ? "border-t border-line md:border-t-0" : ""}`;
+            return external ? (
+              <a key={l} href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+                {inner}
+              </a>
+            ) : (
+              <TransitionLink key={l} href={href} className={cls}>
+                {inner}
+              </TransitionLink>
+            );
+          })}
+        </dl>
+      </div>
+
+      <div data-strip className="opacity-0">
+        <ChainMarquee />
       </div>
     </section>
   );

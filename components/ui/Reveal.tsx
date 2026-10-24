@@ -1,78 +1,89 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
-
-const ease = [0.22, 1, 0.36, 1] as const;
+import { useRef, type ElementType, type ReactNode } from "react";
+import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
 
 type Props = {
   children: ReactNode;
+  className?: string;
+  as?: ElementType;
   delay?: number;
   y?: number;
-  className?: string;
+  duration?: number;
+  variant?: "up" | "fade" | "line" | "clip" | "scale";
+  stagger?: number;
+  start?: string;
+  id?: string;
+  mode?: "scroll" | "load";
+  play?: boolean;
 };
 
-export default function Reveal({ children, delay = 0, y = 22, className }: Props) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.7, delay, ease }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.05 },
-  },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
-};
-
-export function Stagger({
+export default function Reveal({
   children,
   className,
-  gap = 0.07,
-  onLoad = false,
-}: {
-  children: ReactNode;
-  className?: string;
-  gap?: number;
-  onLoad?: boolean;
-}) {
-  return (
-    <motion.div
-      variants={{ ...container, show: { transition: { staggerChildren: gap, delayChildren: 0.05 } } }}
-      initial="hidden"
-      {...(onLoad
-        ? { animate: "show" }
-        : { whileInView: "show", viewport: { once: true, margin: "-70px" } })}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+  as: Tag = "div",
+  delay = 0,
+  y = 28,
+  duration = 1,
+  variant = "up",
+  stagger,
+  start = "top 88%",
+  id,
+  mode = "scroll",
+  play = true,
+}: Props) {
+  const ref = useRef<HTMLElement>(null);
 
-export function StaggerItem({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      if (reducedMotion()) {
+        el.classList.add("is-ready");
+        return;
+      }
+      if (mode === "load" && !play) return;
+
+      const targets = stagger !== undefined ? Array.from(el.children) : el;
+
+      const from: gsap.TweenVars = { opacity: 0 };
+      const to: gsap.TweenVars = { opacity: 1, duration, delay, ease: "power3.out" };
+
+      if (variant === "up") {
+        from.y = y;
+        to.y = 0;
+      } else if (variant === "line") {
+        from.scaleX = 0;
+        from.opacity = 1;
+        to.scaleX = 1;
+        to.ease = "power4.inOut";
+        to.duration = duration * 1.2;
+      } else if (variant === "clip") {
+        from.clipPath = "inset(0 0 100% 0)";
+        from.opacity = 1;
+        to.clipPath = "inset(0 0 0% 0)";
+        to.ease = "power4.inOut";
+        to.duration = duration * 1.25;
+      } else if (variant === "scale") {
+        from.scale = 0.96;
+        from.y = 16;
+        to.scale = 1;
+        to.y = 0;
+      }
+
+      if (stagger !== undefined) to.stagger = stagger;
+      if (mode === "scroll") to.scrollTrigger = { trigger: el, start, once: true };
+
+      gsap.set(targets, from);
+      el.classList.add("is-ready");
+      gsap.to(targets, to);
+    },
+    { scope: ref, dependencies: [play] }
+  );
+
   return (
-    <motion.div variants={item} className={className}>
+    <Tag ref={ref} id={id} data-reveal className={className}>
       {children}
-    </motion.div>
+    </Tag>
   );
 }

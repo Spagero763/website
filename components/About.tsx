@@ -1,73 +1,58 @@
 "use client";
 
-import Image from "next/image";
 import Reveal from "./ui/Reveal";
+import TextReveal from "./ui/TextReveal";
 import SectionHeading from "./ui/SectionHeading";
 
 const facts = [
   { k: "Languages", v: "Solidity, Cairo, Rust (Soroban), TypeScript" },
   { k: "Testing", v: "Foundry unit, fuzz and fork tests" },
-  { k: "Chains", v: "Celo, Base, Avalanche, Mantle, Starknet, Stellar" },
   { k: "Focus", v: "Protocol architecture and contract security" },
+  { k: "Based in", v: "Ondo, Nigeria. Remote or relocation." },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="border-t border-line py-28">
+    <section id="about" className="py-24 lg:py-28">
       <div className="shell">
         <SectionHeading index="01" label="About" title="What I actually do" />
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
-          <Reveal>
-            <p className="text-xl leading-relaxed text-fg">
-              I write the contracts that hold the money.
-            </p>
-            <p className="mt-5 leading-relaxed text-muted">
-              That has meant an escrow that settles a 1v1 match on Celo, a ten-contract identity and
-              lending protocol on Avalanche, a dark pool in Cairo that keeps orders hidden until
-              settlement, and nine months of payment contracts on Base for a product with real
-              users paying real bills.
-            </p>
-            <p className="mt-5 leading-relaxed text-muted">
-              Before I ship anything I try to break it. That habit came from a year in the Cyfrin
-              Updraft security curriculum and from reviewing other people&apos;s code, which is a
-              large part of what I do: 110 pull requests merged into repositories I don&apos;t own,
-              mostly Soroban and Solidity work sitting inside other teams&apos; protocols.
-            </p>
-            <p className="mt-5 leading-relaxed text-muted">
-              Everything on this site links to source you can read or an address you can look up on
-              a block explorer. Nothing here is a screenshot of something I cannot show you.
-            </p>
+        <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[1.3fr_1fr] lg:gap-24">
+          <div>
+            <TextReveal
+              as="p"
+              className="font-display text-2xl font-medium leading-snug text-fg sm:text-3xl"
+            >
+              I write the contracts that hold the money, then spend the rest of my time trying to
+              get it out.
+            </TextReveal>
 
-            <dl className="mt-10 overflow-hidden rounded-2xl border border-line">
-              {facts.map(({ k, v }, i) => (
-                <div
-                  key={k}
-                  className={`grid grid-cols-1 gap-1 bg-surface px-6 py-4 sm:grid-cols-[9rem_1fr] ${
-                    i > 0 ? "border-t border-line" : ""
-                  }`}
-                >
-                  <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
-                    {k}
-                  </dt>
-                  <dd className="text-sm text-muted">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
+            <Reveal className="mt-8 space-y-5 leading-relaxed text-muted pretty" stagger={0.1}>
+              <p>
+                I design the contract architecture, write it, and then test it until I run out of
+                ways to break it. The work ranges from an escrow that settles a head to head match
+                to a dark pool that keeps orders hidden until settlement, and most of it is on
+                mainnet with real users behind it.
+              </p>
+              <p>
+                Trying to break things first is a habit I picked up from a year in the Cyfrin
+                Updraft security curriculum and from reviewing other people&apos;s code inside
+                other teams&apos; protocols, mostly Soroban and Solidity.
+              </p>
+              <p>
+                Everything on this site links to source you can read or an address you can look up
+                on a block explorer. Nothing here is a screenshot of something I cannot show you.
+              </p>
+            </Reveal>
+          </div>
 
-          <Reveal delay={0.12} className="mx-auto w-full max-w-sm">
-            <div className="card rounded-2xl p-2.5">
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  src="/profile.jpg"
-                  alt="Afolabi Ayomide Emmanuel"
-                  width={560}
-                  height={700}
-                  className="aspect-[4/5] w-full object-cover object-top"
-                />
+          <Reveal as="dl" className="border-t border-line lg:mt-3" stagger={0.08} y={14}>
+            {facts.map(({ k, v }) => (
+              <div key={k} className="grid grid-cols-1 gap-1 border-b border-line py-5">
+                <dt className="eyebrow text-faint">{k}</dt>
+                <dd className="mt-1 text-base text-fg">{v}</dd>
               </div>
-            </div>
+            ))}
           </Reveal>
         </div>
       </div>

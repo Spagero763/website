@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
+import PageTransition from "@/components/PageTransition";
+import Cursor from "@/components/Cursor";
+import { EMAIL, SITE } from "@/data/site";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
 });
-
-const SITE = "https://spagero.tech";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -53,10 +55,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
+        <Script id="js-flag" strategy="beforeInteractive">
+          {`document.documentElement.classList.add("js")`}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -66,7 +71,7 @@ export default function RootLayout({
               name: "Afolabi Ayomide Emmanuel",
               url: SITE,
               jobTitle: "Smart Contract Engineer",
-              email: "afolabispagero71@gmail.com",
+              email: EMAIL,
               sameAs: [
                 "https://github.com/Spagero763",
                 "https://x.com/Spagero71",
@@ -86,7 +91,8 @@ export default function RootLayout({
         <a href="#hero" className="skip-link">Skip to content</a>
         <SmoothScroll />
         <ScrollProgress />
-        {children}
+        <Cursor />
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

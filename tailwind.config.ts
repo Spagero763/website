@@ -39,17 +39,24 @@ const config: Config = {
         sm: "var(--shadow-sm)",
         card: "var(--shadow-card)",
         lift: "var(--shadow-lift)",
+        deck: "var(--shadow-deck)",
       },
       fontSize: {
-        display: ["clamp(2.5rem, 6.2vw, 4.5rem)", { lineHeight: "0.98", letterSpacing: "-0.035em" }],
-        section: ["clamp(1.9rem, 3.4vw, 2.75rem)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
-        stat: ["clamp(2rem, 3.6vw, 3rem)", { lineHeight: "1", letterSpacing: "-0.035em" }],
+        hero: ["clamp(2.75rem, 7.4vw, 6.75rem)", { lineHeight: "0.94", letterSpacing: "-0.04em" }],
+        display: ["clamp(2.5rem, 6.2vw, 4.75rem)", { lineHeight: "0.98", letterSpacing: "-0.035em" }],
+        section: ["clamp(2rem, 3.8vw, 3.25rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        stat: ["clamp(2.25rem, 4vw, 3.5rem)", { lineHeight: "1", letterSpacing: "-0.035em" }],
+        wordmark: ["clamp(4rem, 18vw, 17rem)", { lineHeight: "0.85", letterSpacing: "-0.05em" }],
       },
       letterSpacing: {
         tightest: "-0.03em",
       },
       maxWidth: {
-        shell: "72rem",
+        shell: "76rem",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0.22, 1, 0.36, 1)",
+        "in-out": "cubic-bezier(0.76, 0, 0.24, 1)",
       },
     },
   },
