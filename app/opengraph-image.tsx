@@ -37,7 +37,7 @@ export default function Image() {
               maxWidth: 940,
             }}
           >
-            I build on-chain protocols and test them like an attacker.
+            I design the protocol, write the contracts, and ship the product.
           </div>
         </div>
 
@@ -46,9 +46,9 @@ export default function Image() {
           <span style={{ color: "#c8c8d0" }}>/</span>
           <span>Cairo</span>
           <span style={{ color: "#c8c8d0" }}>/</span>
-          <span>Foundry</span>
+          <span>Rust</span>
           <span style={{ color: "#c8c8d0" }}>/</span>
-          <span>110 PRs merged into other teams&apos; repos</span>
+          <span>104 PRs merged into other teams&apos; repos</span>
         </div>
       </div>
     ),

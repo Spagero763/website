@@ -6,12 +6,12 @@ type Props = {
 };
 
 const logoMap: Record<string, string> = {
-  Avalanche: "/avalanche.png",
   Base: "/base.png",
   Celo: "/celo.png",
   Ethereum: "/ethereum.png",
   Starknet: "/starknet.png",
-  Mantle: "/mantle-logo.png",
+  NEAR: "/near.png",
+  Unichain: "/unichain.webp",
   Stellar: "/stellar-logo.png",
 };
 

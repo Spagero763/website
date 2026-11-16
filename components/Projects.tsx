@@ -135,7 +135,7 @@ export default function Projects() {
                 delay={0.1}
                 className="mt-3 font-display text-2xl font-medium text-fg sm:text-3xl lg:mt-4 lg:text-section"
               >
-                Protocols I designed and shipped
+                Products I designed and shipped
               </TextReveal>
             </div>
 
@@ -175,24 +175,53 @@ export default function Projects() {
                   className="absolute inset-0"
                   style={{ zIndex: i, clipPath: "inset(0 0 0 0)" }}
                 >
-                  <div className="relative h-full w-full">
+                  <div className="relative h-full w-full bg-ink">
                     <Image
-                      src={p.preview as string}
+                      src={p.preview}
                       alt={`${p.name} preview`}
                       fill
-                      sizes="(min-width: 1024px) 55vw, 100vw"
+                      sizes="100vw"
                       priority={i === 0}
-                      className="object-cover object-left-top"
+                      className="object-cover object-left-top lg:hidden"
                     />
+                    <div className="absolute inset-0 hidden lg:block">
+                      <div className="absolute left-[6%] right-[6%] top-[7%] overflow-hidden rounded-xl border border-ink-line shadow-lift">
+                        <Image
+                          src={p.preview}
+                          alt={`${p.name} on desktop`}
+                          width={1600}
+                          height={1000}
+                          sizes="48vw"
+                          priority={i === 0}
+                          className="aspect-[16/10] w-full object-cover object-top"
+                        />
+                      </div>
+                      {p.mobile && (
+                        <div className="absolute bottom-[-5%] right-[9%] w-[26%] rounded-[1.5rem] border border-ink-line bg-ink p-1 shadow-lift">
+                          <Image
+                            src={p.mobile}
+                            alt={`${p.name} on a phone`}
+                            width={390}
+                            height={800}
+                            sizes="14vw"
+                            className="aspect-[390/800] w-full rounded-[1.2rem] object-cover object-top"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-line bg-surface/95 py-1 pl-1.5 pr-2.5 shadow-sm backdrop-blur lg:left-4 lg:top-4 lg:py-1.5 lg:pl-2 lg:pr-3">
+                  <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-ink-line bg-[rgba(18,18,24,0.82)] py-1 pl-1.5 pr-2.5 shadow-sm backdrop-blur lg:bottom-5 lg:left-[6%] lg:top-auto lg:py-1.5 lg:pl-2 lg:pr-3">
                     <ChainLogo chain={p.chain} size={16} />
-                    <span className="font-mono text-[11px] font-medium text-fg lg:text-xs">{p.chain}</span>
+                    <span className="font-mono text-[11px] font-medium text-ink-fg lg:text-xs">{p.chain}</span>
                   </div>
-                  {p.status === "live" && (
-                    <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-ok-line bg-ok-soft px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ok shadow-sm lg:right-4 lg:top-4 lg:px-3 lg:py-1.5">
+                  {p.status === "live" ? (
+                    <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-ok-line bg-ok-soft px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ok shadow-sm lg:bottom-[4.25rem] lg:left-[6%] lg:right-auto lg:top-auto lg:px-3 lg:py-1.5">
                       <span className="h-1.5 w-1.5 rounded-full bg-ok" />
-                      Live
+                      Mainnet
+                    </span>
+                  ) : (
+                    <span className="absolute right-3 top-3 rounded-full border border-ink-line bg-[rgba(18,18,24,0.82)] px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ink-muted shadow-sm lg:bottom-[4.25rem] lg:left-[6%] lg:right-auto lg:top-auto lg:px-3 lg:py-1.5">
+                      Testnet
                     </span>
                   )}
                   <TransitionLink
@@ -236,7 +265,7 @@ export default function Projects() {
       {/* reduced motion fallback, shown by CSS only when the stage is hidden */}
       <div data-stage-fallback className="hidden">
         <div className="shell pt-24">
-          <SectionHeading index="02" label="Selected work" title="Protocols I designed and shipped" className="mb-8" />
+          <SectionHeading index="02" label="Selected work" title="Products I designed and shipped" className="mb-8" />
         </div>
         <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:px-8">
           {featured.map((p, i) => (
@@ -360,15 +389,17 @@ function StageText({ project, index, total }: { project: Project; index: number;
       </dl>
 
       <div className="mt-4 hidden flex-wrap gap-2 sm:flex lg:mt-5">
-        {project.deployments && (
+        {(project.deployments || project.proof) && (
           <p className="inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-3 py-1.5 font-mono text-[11px] font-medium text-accent">
             <FileCode2 size={12} />
-            {project.deployments.length}{" "}
-            {project.deployments.length === 1 ? "address" : "addresses"} verifiable on{" "}
-            {project.deployments[0].network}
+            {project.deployments
+              ? `${project.deployments.length} ${
+                  project.deployments.length === 1 ? "address" : "addresses"
+                } on ${project.deployments[0].network}`
+              : "Transactions on Celo mainnet"}
           </p>
         )}
-        {project.tech.slice(0, 5).map((t) => (
+        {project.tech.slice(0, 4).map((t) => (
           <span
             key={t}
             className="rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] text-muted"
@@ -394,7 +425,7 @@ function FallbackCard({ project, index, total }: { project: Project; index: numb
         className="relative block aspect-[16/10] overflow-hidden border-b border-line"
       >
         <Image
-          src={project.preview as string}
+          src={project.preview}
           alt={`${project.name} preview`}
           fill
           sizes="84vw"

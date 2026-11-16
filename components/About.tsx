@@ -5,9 +5,9 @@ import TextReveal from "./ui/TextReveal";
 import SectionHeading from "./ui/SectionHeading";
 
 const facts = [
-  { k: "Languages", v: "Solidity, Cairo, Rust (Soroban), TypeScript" },
-  { k: "Testing", v: "Foundry unit, fuzz and fork tests" },
-  { k: "Focus", v: "Protocol architecture and contract security" },
+  { k: "Languages", v: "Solidity, Cairo, Rust, TypeScript" },
+  { k: "Testing", v: "Foundry, with fork tests against live deployments" },
+  { k: "Focus", v: "DeFi mechanisms, payments and agent infrastructure" },
   { k: "Based in", v: "Ondo, Nigeria. Remote or relocation." },
 ];
 
@@ -23,21 +23,22 @@ export default function About() {
               as="p"
               className="font-display text-2xl font-medium leading-snug text-fg sm:text-3xl"
             >
-              I write the contracts that hold the money, then spend the rest of my time trying to
-              get it out.
+              I write the contracts that hold the money, then build everything a person needs to
+              use them.
             </TextReveal>
 
             <Reveal className="mt-8 space-y-5 leading-relaxed text-muted pretty" stagger={0.1}>
               <p>
-                I design the contract architecture, write it, and then test it until I run out of
-                ways to break it. The work ranges from an escrow that settles a head to head match
-                to a dark pool that keeps orders hidden until settlement, and most of it is on
-                mainnet with real users behind it.
+                Most smart contract engineers stop at the contract. I keep going: the agent or
+                backend that drives it, the payment rails, and an interface someone can use on a
+                cheap phone. Cruce, Gambit, Bell and Convoy are all on mainnet, and each one started
+                from a specific leak I could measure.
               </p>
               <p>
-                Trying to break things first is a habit I picked up from a year in the Cyfrin
-                Updraft security curriculum and from reviewing other people&apos;s code inside
-                other teams&apos; protocols, mostly Soroban and Solidity.
+                The Uniswap Hook Incubator taught me to argue a mechanism with numbers instead of
+                adjectives. A year in the Cyfrin Updraft security curriculum, and a hundred merged
+                pull requests in other teams&apos; Soroban and Solidity codebases, taught me to read
+                code that is not mine and to expect mine to be read.
               </p>
               <p>
                 Everything on this site links to source you can read or an address you can look up

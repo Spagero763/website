@@ -1,26 +1,24 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
 import { gsap, SplitText, useGSAP, reducedMotion } from "@/lib/gsap";
+import Image from "next/image";
 import { useIntro } from "./Intro";
 import CountUp from "./ui/CountUp";
 import Magnetic from "./ui/Magnetic";
 import ChainMarquee from "./ChainMarquee";
 import TransitionLink from "./TransitionLink";
-import { CV } from "@/data/site";
+import { CV, MERGED_PRS, MERGED_PRS_URL, MERGED_REPOS } from "@/data/site";
+import { deploymentCount, projects } from "@/data/projects";
+
+const latest = projects[0];
 
 const stats = [
-  {
-    n: 292,
-    l: "Pull requests merged",
-    href: "https://github.com/search?q=is%3Apr+is%3Amerged+author%3ASpagero763&type=pullrequests",
-    external: true,
-  },
-  { n: 64, l: "Repos contributed to", href: "https://github.com/Spagero763", external: true },
-  { n: 12, l: "Verifiable contract addresses", href: "/#projects", external: false },
-  { n: 6, l: "Chains deployed on", href: "/#projects", external: false },
+  { n: MERGED_PRS, l: "Pull requests merged into other teams' repos", href: MERGED_PRS_URL, external: true },
+  { n: MERGED_REPOS, l: "Repositories that merged my code", href: "/#contributions", external: false },
+  { n: deploymentCount, l: "Contract addresses you can look up", href: "/#projects", external: false },
+  { n: 4, l: "Mainnets shipped on", href: "/#projects", external: false },
 ];
 
 export default function Hero() {
@@ -78,7 +76,7 @@ export default function Hero() {
               )
               .fromTo(
                 q("[data-portrait] img"),
-                { scale: 1.3 },
+                { scale: 1.2 },
                 { scale: 1, duration: 1.8, ease: "power3.out" },
                 0.3
               )
@@ -107,7 +105,7 @@ export default function Hero() {
       document.fonts.ready.then(run);
 
       gsap.to(q("[data-portrait]"), {
-        yPercent: 14,
+        yPercent: 10,
         ease: "none",
         scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
       });
@@ -165,29 +163,50 @@ export default function Hero() {
           <h1
             data-h
             data-split
-            className="font-display text-hero font-medium text-fg balance"
+            className="font-display text-hero font-medium text-fg balance lg:text-display"
           >
-            I build on-chain protocols and test them like an attacker.
+            I design the protocol, write the contracts, and ship the product.
           </h1>
 
           <div
             data-portrait
-            className="order-first w-32 sm:w-40 lg:order-none lg:w-full"
+            className="hidden lg:block"
             style={{ clipPath: "inset(0 0 0% 0)" }}
           >
-            <div
-              data-portrait-frame
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-card"
+            <TransitionLink
+              href={`/work/${latest.slug}`}
+              label={latest.name}
+              data-cursor="View"
+              aria-label={`${latest.name} case study`}
+              className="group block"
             >
-              <Image
-                src="/avatar.jpg"
-                alt="Afolabi Ayomide Emmanuel"
-                fill
-                sizes="(min-width: 1024px) 19rem, 10rem"
-                className="object-cover object-top"
-                priority
-              />
-            </div>
+              <div
+                data-portrait-frame
+                className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-ink shadow-card"
+              >
+                <Image
+                  src={latest.mobile ?? latest.preview}
+                  alt={`${latest.name} on a phone`}
+                  fill
+                  sizes="19rem"
+                  className="object-cover object-top"
+                  priority
+                />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-[rgba(10,10,14,0.97)] via-[rgba(10,10,14,0.82)] to-transparent p-4 pt-16">
+                  <span>
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-muted">
+                      Latest
+                    </span>
+                    <span className="mt-1 block font-display text-xl font-medium text-ink-fg">
+                      {latest.name}
+                    </span>
+                  </span>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-ink-line text-ink-fg transition-all duration-500 ease-out group-hover:bg-ink-fg group-hover:text-ink">
+                    <ArrowUpRight size={14} className="transition-transform duration-500 ease-out group-hover:rotate-45" />
+                  </span>
+                </div>
+              </div>
+            </TransitionLink>
           </div>
         </div>
 
@@ -198,10 +217,11 @@ export default function Hero() {
           className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_1fr] lg:items-start"
         >
           <p className="max-w-xl text-lg leading-relaxed text-muted pretty">
-            I work in Solidity and Cairo. I have shipped a ten-contract identity and lending
-            protocol, payment contracts that ran in production on Base for nine months, and a
-            security watcher live on Mantle. Most of my recent code sits in other people&apos;s
-            repositories, reviewed and merged by their maintainers, so you can read all of it.
+            I work in Solidity, Cairo and Rust. This year I put a currency exchange agent, a
+            staking arcade and a market for tokenized stocks on mainnet, built a Uniswap v4 hook
+            as a graduate of the Uniswap Hook Incubator, and had {MERGED_PRS} pull requests merged
+            into other teams&apos; repositories. Everything here links to source or an address you
+            can check.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 lg:justify-end">
@@ -232,7 +252,7 @@ export default function Hero() {
             const inner = (
               <>
                 <dt className="flex items-start font-display text-stat font-medium text-fg">
-                  <CountUp to={n} suffix="+" mode="load" play={done} delay={1.1 + i * 0.1} />
+                  <CountUp to={n} mode="load" play={done} delay={1.1 + i * 0.1} />
                 </dt>
                 <dd className="mt-2 flex items-center gap-1.5 text-xs leading-snug text-faint transition-colors duration-300 group-hover:text-fg">
                   {l}

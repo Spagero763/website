@@ -4,35 +4,33 @@ export const stack = [
     items: [
       "Solidity",
       "Cairo",
-      "Soroban (Rust)",
+      "Rust (NEAR, Soroban)",
+      "Uniswap v4 hooks",
       "EVM internals",
-      "Protocol architecture",
-      "Upgradeable contracts",
       "OpenZeppelin",
     ],
   },
   {
-    title: "Testing and security",
+    title: "Testing and safety",
     items: [
       "Foundry",
-      "Fuzz testing",
       "Fork testing",
       "Gas optimization",
-      "Reentrancy protection",
       "Access control",
-      "Commit-reveal schemes",
+      "Reentrancy protection",
+      "Oracle and rate source hardening",
     ],
   },
   {
-    title: "Integration and tooling",
+    title: "Product and integration",
     items: [
-      "Ethers.js",
-      "Wagmi",
-      "Viem",
-      "Claude API and agents",
+      "TypeScript",
+      "Next.js and React",
+      "viem and wagmi",
       "x402 payments",
-      "Chainlink oracles",
-      "Deployment pipelines",
+      "Permit2 and EIP-3009",
+      "Agent tooling (MCP, ERC-8004)",
+      "GSAP and Framer Motion",
     ],
   },
 ];
@@ -95,6 +93,18 @@ export type Training = {
 };
 
 export const training: Training[] = [
+  {
+    org: "Uniswap Hook Incubator",
+    program: "Cohort 10 graduate, Atrium Academy",
+    period: "Jul 2026 - Sep 2026",
+    bullets: [
+      "Uniswap v4 hook design: callbacks, custom accounting, hook permissions and testing against deployed pools",
+      "Capstone: Vernier, a venue for yield-bearing assets",
+      "Graduation is issued as an NFT in the UHI 10 Grads collection",
+    ],
+    link: "https://opensea.io/collection/uhi-10-grads",
+    linkLabel: "Credential",
+  },
   {
     org: "Cyfrin Updraft",
     program: "Smart contract security and auditing",

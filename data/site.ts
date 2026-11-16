@@ -14,4 +14,9 @@ export const socials = [
   { label: "Telegram", href: "https://t.me/Spagerobaseeth", handle: "Spagerobaseeth" },
 ];
 
-export const chains = ["Celo", "Base", "Avalanche", "Mantle", "Starknet", "Stellar"];
+export const chains = ["Celo", "Base", "Starknet", "NEAR", "Unichain", "Stellar"];
+
+export const MERGED_PRS = 104;
+export const MERGED_REPOS = 57;
+export const MERGED_PRS_URL =
+  "https://github.com/search?q=is%3Apr+is%3Amerged+author%3ASpagero763+-user%3ASpagero763&type=pullrequests";

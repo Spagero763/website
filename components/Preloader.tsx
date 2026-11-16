@@ -49,25 +49,25 @@ export default function Preloader() {
         })
         .to(n, {
           v: 100,
-          duration: 1.3,
+          duration: 0.85,
           ease: "power2.inOut",
           onUpdate: () => {
             if (counter) counter.textContent = String(Math.round(n.v)).padStart(3, "0");
           },
         })
-        .fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 1.3, ease: "power2.inOut" }, 0)
-        .from(wordEls, { yPercent: 110, duration: 1, stagger: 0.09 }, 0.15)
-        .to(wordEls, { yPercent: -110, duration: 0.6, stagger: 0.05, ease: "power3.in" }, 1.35)
-        .to([counter, rule], { opacity: 0, duration: 0.35 }, 1.4)
+        .fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.85, ease: "power2.inOut" }, 0)
+        .from(wordEls, { yPercent: 110, duration: 0.7, stagger: 0.06 }, 0.05)
+        .to(wordEls, { yPercent: -110, duration: 0.45, stagger: 0.04, ease: "power3.in" }, 0.85)
+        .to([counter, rule], { opacity: 0, duration: 0.3 }, 0.9)
         .to(
           el,
           {
             clipPath: "inset(0 0 100% 0)",
-            duration: 1,
+            duration: 0.8,
             ease: "power4.inOut",
             onStart: release,
           },
-          1.6
+          1.05
         );
     },
     { scope: ref }

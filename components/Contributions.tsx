@@ -6,6 +6,7 @@ import TextReveal from "./ui/TextReveal";
 import SectionHeading from "./ui/SectionHeading";
 import CountUp from "./ui/CountUp";
 import Magnetic from "./ui/Magnetic";
+import { MERGED_PRS, MERGED_PRS_URL, MERGED_REPOS } from "@/data/site";
 
 type Contribution = {
   project: string;
@@ -13,13 +14,11 @@ type Contribution = {
   about: string;
   contribution: string;
   prs: number;
-  live: string;
+  live?: string;
   repo: string;
 };
 
 const DRIPS = "https://www.drips.network/wave/users/3b1e45d0-0d8c-4c3a-b8a0-df4854374b32";
-const ALL_PRS =
-  "https://github.com/search?q=is%3Apr+is%3Amerged+author%3ASpagero763&type=pullrequests";
 
 const contributions: Contribution[] = [
   {
@@ -43,24 +42,23 @@ const contributions: Contribution[] = [
     repo: "https://github.com/chioma-housing-protocol-I/chioma",
   },
   {
-    project: "Lance",
-    ecosystem: "Stellar / Soroban",
-    about: "Freelancer marketplace with Soroban smart contract escrow.",
+    project: "Mobile Money",
+    ecosystem: "Stellar",
+    about: "Backend bridging African mobile money networks with Stellar.",
     contribution:
-      "Structured JSON logging and wallet-provider integration for the marketplace frontend.",
-    prs: 2,
-    live: "https://lance-online.vercel.app",
-    repo: "https://github.com/DXmakers/lance",
+      "Account security and operations: refresh token rotation with family revocation, login lockout, device fingerprinting, a stale transaction watchdog and a daily PnL report job.",
+    prs: 8,
+    repo: "https://github.com/sublime247/mobile-money",
   },
 ];
 
 const moreRepos = [
-  { repo: "sublime247/mobile-money", prs: 8 },
   { repo: "NFTopia-Foundation/nftopia-stellar", prs: 5 },
   { repo: "Disciplr-Org/Disciplr-Contracts", prs: 5 },
   { repo: "ancore-org/ancore", prs: 4 },
   { repo: "Akanimoh12/Stellar-Tipz", prs: 4 },
   { repo: "Nullifier-Systems/velo", prs: 3 },
+  { repo: "salazarsebas/Cougr", prs: 3 },
   { repo: "LabsCrypt/remitlend", prs: 3 },
   { repo: "GalactiGuild/Stellar-Guilds", prs: 3 },
   { repo: "Alien-Protocol/Alien-Protocol", prs: 3 },
@@ -83,10 +81,10 @@ export default function Contributions() {
         <div className="mb-20 grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-end">
           <Reveal>
             <p className="font-display text-stat font-medium text-ink-fg">
-              <CountUp to={110} />
+              <CountUp to={MERGED_PRS} />
             </p>
             <p className="mt-2 max-w-xs text-sm leading-snug text-ink-muted">
-              pull requests merged into repositories I don&apos;t own, across 64 of them
+              pull requests merged into repositories I don&apos;t own, across {MERGED_REPOS} of them
             </p>
           </Reveal>
           <Reveal delay={0.1} className="max-w-2xl">
@@ -137,15 +135,17 @@ export default function Contributions() {
                   <GitPullRequest size={12} />
                   My PRs
                 </a>
-                <a
-                  href={c.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-ink-muted transition-colors hover:text-ink-fg"
-                >
-                  <ExternalLink size={12} />
-                  Live
-                </a>
+                {c.live && (
+                  <a
+                    href={c.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-ink-muted transition-colors hover:text-ink-fg"
+                  >
+                    <ExternalLink size={12} />
+                    Live
+                  </a>
+                )}
                 <a
                   href={c.repo}
                   target="_blank"
@@ -203,13 +203,13 @@ export default function Contributions() {
             </TextReveal>
             <Magnetic>
               <a
-                href={ALL_PRS}
+                href={MERGED_PRS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-light"
               >
                 <Github size={16} />
-                Browse all 292 merged PRs
+                Browse all {MERGED_PRS} merged PRs
                 <ArrowUpRight size={15} />
               </a>
             </Magnetic>
