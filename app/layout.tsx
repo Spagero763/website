@@ -18,11 +18,11 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
-  title: "Afolabi Ayomide Emmanuel | Senior Blockchain Engineer",
+  title: "Afolabi Ayomide Emmanuel | Blockchain Engineer",
   description:
     "Blockchain engineer working in Solidity, Cairo and Rust across protocol design, security review, AI agents and the full stack. Products live on five mainnets, a Uniswap v4 hook, and 104 pull requests merged into other teams' repositories.",
   keywords: [
-    "Senior Blockchain Engineer",
+    "Blockchain Engineer",
     "Smart Contract Engineer",
     "Smart Contract Auditor",
     "AI Agent Engineer",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Afolabi Ayomide Emmanuel" }],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Afolabi Ayomide Emmanuel | Senior Blockchain Engineer",
+    title: "Afolabi Ayomide Emmanuel | Blockchain Engineer",
     description:
       "Smart contracts, security review, AI agents and full stack. Products live on five mainnets, and a Uniswap v4 hook.",
     url: SITE,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Afolabi Ayomide Emmanuel | Senior Blockchain Engineer",
+    title: "Afolabi Ayomide Emmanuel | Blockchain Engineer",
     description:
       "Smart contracts, security review, AI agents and full stack. Products live on five mainnets, and a Uniswap v4 hook.",
     creator: "@Spagero71",
@@ -75,7 +75,7 @@ export default function RootLayout({
               "@type": "Person",
               name: "Afolabi Ayomide Emmanuel",
               url: SITE,
-              jobTitle: "Senior Blockchain Engineer",
+              jobTitle: "Blockchain Engineer",
               email: EMAIL,
               sameAs: [
                 "https://github.com/Spagero763",

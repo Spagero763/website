@@ -64,9 +64,9 @@ export const roles: Role[] = [
     period: "Jul 2025 - Mar 2026",
     kind: "Paid role",
     bullets: [
-      "Built and maintained the payment contracts behind an on-chain utility payments product on Base",
-      "Owned transaction execution and user payment flows in production",
-      "Tested with Foundry, with reliability as the priority since the contracts moved user funds",
+      "Paid role on the team behind an on-chain utility payments product, where bills are paid in stablecoins",
+      "Worked on the order contract: a user creates an order in USDT or USDC and it is marked settled or failed, with per-token limits, a pause switch and a blacklist",
+      "Deployed on Base, Lisk and Celo. The Base contract recorded 209 orders, 169 of them settled",
     ],
   },
   {

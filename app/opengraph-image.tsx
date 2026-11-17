@@ -1,6 +1,6 @@
 ﻿import { ImageResponse } from "next/og";
 
-export const alt = "Afolabi Ayomide Emmanuel, Senior Blockchain Engineer";
+export const alt = "Afolabi Ayomide Emmanuel, Blockchain Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,7 +26,7 @@ export default function Image() {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 24, color: "#1e3fbb", letterSpacing: 4, marginBottom: 20 }}>
-            SENIOR BLOCKCHAIN ENGINEER
+            BLOCKCHAIN ENGINEER
           </div>
           <div
             style={{

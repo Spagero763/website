@@ -153,7 +153,7 @@ export default function Hero() {
           <div data-meta className="contents">
             <span className="eyebrow text-muted">Afolabi Ayomide Emmanuel</span>
             <span data-rule className="h-px w-12 origin-left bg-line-strong sm:w-20" />
-            <span className="eyebrow text-accent">Senior blockchain engineer</span>
+            <span className="eyebrow text-accent">Blockchain engineer</span>
           </div>
         </div>
 
