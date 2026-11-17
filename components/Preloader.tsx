@@ -84,7 +84,7 @@ export default function Preloader() {
         <span className="font-mono text-sm font-semibold text-ink-fg">
           afolabi<span className="text-ink-muted">.</span>
         </span>
-        <span className="eyebrow text-ink-muted">Smart contract engineer</span>
+        <span className="eyebrow text-ink-muted">Senior blockchain engineer</span>
       </div>
 
       <div className="flex flex-wrap gap-x-[0.25em] font-display text-hero font-medium text-ink-fg">

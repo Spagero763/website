@@ -14,7 +14,7 @@ export const socials = [
   { label: "Telegram", href: "https://t.me/Spagerobaseeth", handle: "Spagerobaseeth" },
 ];
 
-export const chains = ["Celo", "Base", "Starknet", "NEAR", "Unichain", "Stellar"];
+export const chains = ["Celo", "Base", "Starknet", "NEAR", "Mantle", "Unichain", "Stellar"];
 
 export const MERGED_PRS = 104;
 export const MERGED_REPOS = 57;

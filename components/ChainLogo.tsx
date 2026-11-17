@@ -11,6 +11,7 @@ const logoMap: Record<string, string> = {
   Ethereum: "/ethereum.png",
   Starknet: "/starknet.png",
   NEAR: "/near.png",
+  Mantle: "/mantle-logo.png",
   Unichain: "/unichain.webp",
   Stellar: "/stellar-logo.png",
 };

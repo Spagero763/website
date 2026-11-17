@@ -10,15 +10,13 @@ import Magnetic from "./ui/Magnetic";
 import ChainMarquee from "./ChainMarquee";
 import TransitionLink from "./TransitionLink";
 import { CV, MERGED_PRS, MERGED_PRS_URL, MERGED_REPOS } from "@/data/site";
-import { deploymentCount, projects } from "@/data/projects";
-
-const latest = projects[0];
+import { deploymentCount } from "@/data/projects";
 
 const stats = [
   { n: MERGED_PRS, l: "Pull requests merged into other teams' repos", href: MERGED_PRS_URL, external: true },
   { n: MERGED_REPOS, l: "Repositories that merged my code", href: "/#contributions", external: false },
   { n: deploymentCount, l: "Contract addresses you can look up", href: "/#projects", external: false },
-  { n: 4, l: "Mainnets shipped on", href: "/#projects", external: false },
+  { n: 5, l: "Mainnets shipped on", href: "/#projects", external: false },
 ];
 
 export default function Hero() {
@@ -155,7 +153,7 @@ export default function Hero() {
           <div data-meta className="contents">
             <span className="eyebrow text-muted">Afolabi Ayomide Emmanuel</span>
             <span data-rule className="h-px w-12 origin-left bg-line-strong sm:w-20" />
-            <span className="eyebrow text-accent">Smart contract engineer</span>
+            <span className="eyebrow text-accent">Senior blockchain engineer</span>
           </div>
         </div>
 
@@ -170,43 +168,22 @@ export default function Hero() {
 
           <div
             data-portrait
-            className="hidden lg:block"
+            className="order-first w-32 sm:w-40 lg:order-none lg:w-full"
             style={{ clipPath: "inset(0 0 0% 0)" }}
           >
-            <TransitionLink
-              href={`/work/${latest.slug}`}
-              label={latest.name}
-              data-cursor="View"
-              aria-label={`${latest.name} case study`}
-              className="group block"
+            <div
+              data-portrait-frame
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-card"
             >
-              <div
-                data-portrait-frame
-                className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-ink shadow-card"
-              >
-                <Image
-                  src={latest.mobile ?? latest.preview}
-                  alt={`${latest.name} on a phone`}
-                  fill
-                  sizes="19rem"
-                  className="object-cover object-top"
-                  priority
-                />
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-[rgba(10,10,14,0.97)] via-[rgba(10,10,14,0.82)] to-transparent p-4 pt-16">
-                  <span>
-                    <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-                      Latest
-                    </span>
-                    <span className="mt-1 block font-display text-xl font-medium text-ink-fg">
-                      {latest.name}
-                    </span>
-                  </span>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-ink-line text-ink-fg transition-all duration-500 ease-out group-hover:bg-ink-fg group-hover:text-ink">
-                    <ArrowUpRight size={14} className="transition-transform duration-500 ease-out group-hover:rotate-45" />
-                  </span>
-                </div>
-              </div>
-            </TransitionLink>
+              <Image
+                src="/avatar.jpg"
+                alt="Afolabi Ayomide Emmanuel"
+                fill
+                sizes="(min-width: 1024px) 19rem, 10rem"
+                className="object-cover object-top"
+                priority
+              />
+            </div>
           </div>
         </div>
 
@@ -217,11 +194,11 @@ export default function Hero() {
           className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[1fr_1fr] lg:items-start"
         >
           <p className="max-w-xl text-lg leading-relaxed text-muted pretty">
-            I work in Solidity, Cairo and Rust. This year I put a currency exchange agent, a
-            staking arcade and a market for tokenized stocks on mainnet, built a Uniswap v4 hook
-            as a graduate of the Uniswap Hook Incubator, and had {MERGED_PRS} pull requests merged
-            into other teams&apos; repositories. Everything here links to source or an address you
-            can check.
+            I work in Solidity, Cairo and Rust, across protocol design, security review, AI
+            agents and the full stack around them. This year I put a currency exchange agent, a
+            staking arcade and a market for tokenized stocks on mainnet, graduated from the Uniswap
+            Hook Incubator, and had {MERGED_PRS} pull requests merged into other teams&apos;
+            repositories. Everything here links to source or an address you can check.
           </p>
 
           <div className="flex flex-wrap items-center gap-3 lg:justify-end">

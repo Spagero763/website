@@ -234,6 +234,57 @@ export const projects: Project[] = [
     role: "Everything: the contracts, settlement and rewards logic, the five games and the interface.",
   },
   {
+    slug: "chainsentinel",
+    name: "ChainSentinel",
+    tagline: "A Solidity analyzer and a live watcher for Mantle",
+    description:
+      "Paste a Solidity contract and get a first-pass security review in seconds: 37 static rules, then an AI pass that looks for what the rules cannot express. A watcher follows Mantle mainnet and raises anomalies as they happen.",
+    chain: "Mantle",
+    category: "Security",
+    year: "2026",
+    featured: true,
+    metrics: [
+      { value: "37", label: "Gas and security rules" },
+      { value: "2", label: "Passes: static rules, then an AI review" },
+      { value: "0.4 to 0.8", label: "Solidity versions supported" },
+    ],
+    tech: ["TypeScript", "Solidity", "Next.js", "viem", "Static analysis", "LLM review", "ERC-8004"],
+    preview: "/work/chainsentinel.jpg",
+    mobile: "/work/chainsentinel-mobile.jpg",
+    live: "https://chainsentinel-app.vercel.app",
+    github: "https://github.com/Spagero763/chainsentinel",
+    status: "live",
+    contracts: ["AgentIdentity"],
+    deployments: [
+      {
+        name: "AgentIdentity",
+        address: "0xd933C28d0fc2283CcA10f4361226c75f7ffEb39e",
+        network: "Mantle mainnet",
+        explorer: "https://mantlescan.xyz/address/0xd933c28d0fc2283cca10f4361226c75f7ffeb39e",
+      },
+    ],
+    problem:
+      "Most contracts that lose money were never looked at by anyone but their author. A professional audit costs more than a small team has, so the common mistakes ship: an unchecked call, a missing access check, a state update after an external call.",
+    solution:
+      "A static analyzer runs 37 rules over the source and reports each hit with its severity and line. An AI pass then reads the contract for logic the rules cannot express, such as a reward path that can be drained, and its findings are labelled as such. Each audit is recorded against an on-chain agent identity, and a separate watcher follows Mantle for whale movements, deployments and gas spikes.",
+    useCase:
+      "A developer about to deploy runs it as a first pass before paying for a full audit. The page says plainly that it is not a substitute for one. Teams on Mantle subscribe to the alert channels to see anomalies as they land.",
+    design: [
+      "An editor on the left and results on the right, so a finding and the line it points at are on screen together.",
+      "Findings are ranked by severity with a rule id and a line number, and the ones the AI pass found carry their own tag.",
+      "A single security score sits above the list, with the counts by severity beside it.",
+      "A load example button fills in a deliberately vulnerable contract, so the tool can be judged in ten seconds.",
+    ],
+    highlights: [
+      "37 rules covering reentrancy, access control, tx.origin, unchecked low-level calls, gas patterns and more",
+      "AI findings are kept separate from rule findings, so a reader knows which is which",
+      "Agent identity contract on Mantle mainnet, with audits recorded on-chain",
+      "Live anomaly feed with Telegram and Discord alerts",
+      "States its own limit: a first pass, not a professional audit",
+    ],
+    role: "Everything: the analyzer and its rules, the AI review prompt, the identity contract, the watcher and the interface.",
+  },
+  {
     slug: "bell",
     name: "Bell",
     tagline: "A price for tokenized stocks while the exchange is closed",

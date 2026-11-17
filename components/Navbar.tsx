@@ -9,13 +9,14 @@ import { EMAIL } from "@/data/site";
 
 const links = [
   { href: "/#about", id: "about", label: "About" },
+  { href: "/#capabilities", id: "capabilities", label: "What I do" },
   { href: "/#projects", id: "projects", label: "Work" },
   { href: "/#contributions", id: "contributions", label: "Open source" },
   { href: "/#background", id: "background", label: "Background" },
   { href: "/#contact", id: "contact", label: "Contact" },
 ];
 
-const sectionIds = ["about", "projects", "contributions", "background", "contact"];
+const sectionIds = ["about", "capabilities", "projects", "contributions", "background", "contact"];
 
 export default function Navbar() {
   const header = useRef<HTMLElement>(null);

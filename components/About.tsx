@@ -7,7 +7,7 @@ import SectionHeading from "./ui/SectionHeading";
 const facts = [
   { k: "Languages", v: "Solidity, Cairo, Rust, TypeScript" },
   { k: "Testing", v: "Foundry, with fork tests against live deployments" },
-  { k: "Focus", v: "DeFi mechanisms, payments and agent infrastructure" },
+  { k: "Focus", v: "Protocols, security review, AI agents, full stack" },
   { k: "Based in", v: "Ondo, Nigeria. Remote or relocation." },
 ];
 
@@ -29,10 +29,10 @@ export default function About() {
 
             <Reveal className="mt-8 space-y-5 leading-relaxed text-muted pretty" stagger={0.1}>
               <p>
-                Most smart contract engineers stop at the contract. I keep going: the agent or
-                backend that drives it, the payment rails, and an interface someone can use on a
-                cheap phone. Cruce, Gambit, Bell and Convoy are all on mainnet, and each one started
-                from a specific leak I could measure.
+                Most smart contract engineers stop at the contract. I keep going: the security
+                review, the AI agent or back end that drives it, the payment rails, and an interface
+                someone can use on a cheap phone. Cruce, Gambit, Bell and Convoy are all on mainnet,
+                and each one started from a specific leak I could measure.
               </p>
               <p>
                 The Uniswap Hook Incubator taught me to argue a mechanism with numbers instead of

@@ -3,6 +3,7 @@ import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Capabilities from "@/components/Capabilities";
 import Projects from "@/components/Projects";
 import Contributions from "@/components/Contributions";
 import Background from "@/components/Background";
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Capabilities />
         <Projects />
         <Contributions />
         <Background />

@@ -37,7 +37,7 @@ export default function Footer() {
 
         <div className="mt-6 grid gap-6 text-xs sm:grid-cols-3 sm:items-center">
           <p className="font-mono text-ink-muted">
-            © 2026 Afolabi Ayomide Emmanuel. Smart contract engineer.
+            © 2026 Afolabi Ayomide Emmanuel. Senior blockchain engineer.
           </p>
           <p className="font-mono tabular-nums text-ink-muted sm:text-center">
             Ondo, Nigeria <span className="text-ink-fg">{time || "--:--:--"}</span> WAT
