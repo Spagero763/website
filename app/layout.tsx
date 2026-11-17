@@ -80,7 +80,7 @@ export default function RootLayout({
               sameAs: [
                 "https://github.com/Spagero763",
                 "https://x.com/Spagero71",
-                "https://www.linkedin.com/in/afolabi-ayomide-emmanuel-bba6b9367/",
+                "https://www.linkedin.com/in/afolabi-ayomide-emmanuel",
               ],
               knowsAbout: [
                 "Solidity",

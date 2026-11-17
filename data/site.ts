@@ -8,7 +8,7 @@ export const socials = [
   { label: "Twitter", href: "https://x.com/Spagero71", handle: "@Spagero71" },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/afolabi-ayomide-emmanuel-bba6b9367/",
+    href: "https://www.linkedin.com/in/afolabi-ayomide-emmanuel",
     handle: "afolabi-ayomide-emmanuel",
   },
   { label: "Telegram", href: "https://t.me/Spagerobaseeth", handle: "Spagerobaseeth" },
