@@ -13,7 +13,7 @@
   --ink-line: rgba(255, 255, 255, 0.12);
   --fg: #15151a;
   --muted: #55555f;
-  --faint: #84848e;
+  --faint: #686873;
   --line: rgba(19, 19, 28, 0.1);
   --line-strong: rgba(19, 19, 28, 0.24);
   --accent: #1e3fbb;
@@ -291,8 +291,11 @@ html.has-cursor [role="button"] {
     text-wrap: balance;
   }
 
-  .pretty {
-    text-wrap: pretty;
+  /* costly to lay out on a long page, so phones get plain wrapping */
+  @media (min-width: 1024px) {
+    .pretty {
+      text-wrap: pretty;
+    }
   }
 
   .line-clamp-2 {
@@ -414,7 +417,12 @@ html.has-cursor [role="button"] {
   animation: marquee 48s linear infinite;
 }
 
-.marquee:hover .marquee-track {
+.marquee-track {
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track,
+.marquee.is-offscreen .marquee-track {
   animation-play-state: paused;
 }
 

@@ -2,6 +2,7 @@
 
 import { useRef, type ElementType, type ReactNode } from "react";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { onEnter } from "@/lib/inview";
 
 type Props = {
   children: ReactNode;
@@ -35,7 +36,7 @@ export default function Reveal({
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
-    () => {
+    (_, contextSafe) => {
       const el = ref.current;
       if (!el) return;
       if (reducedMotion()) {
@@ -72,11 +73,20 @@ export default function Reveal({
       }
 
       if (stagger !== undefined) to.stagger = stagger;
-      if (mode === "scroll") to.scrollTrigger = { trigger: el, start, once: true };
-
       gsap.set(targets, from);
       el.classList.add("is-ready");
-      gsap.to(targets, to);
+
+      if (mode === "load") {
+        gsap.to(targets, to);
+        return;
+      }
+      return onEnter(
+        el,
+        start,
+        contextSafe!(() => {
+          gsap.to(targets, to);
+        })
+      );
     },
     { scope: ref, dependencies: [play] }
   );

@@ -23,13 +23,13 @@ export default function Contact() {
           delay={0.1}
           className="mt-8 max-w-4xl font-display text-display font-medium text-ink-fg balance"
         >
-          Hiring for a contract role? Let&apos;s talk.
+          Hiring a blockchain engineer? Let&apos;s talk.
         </TextReveal>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           <Reveal delay={0.15}>
             <p className="max-w-xl text-lg leading-relaxed text-ink-muted pretty">
-              I am available now and looking for smart contract, protocol or security work, full-time
+              I am available now for smart contract, security, AI agent or full stack work, full-time
               or contract. Send me the repo and what you need done, and I will tell you straight
               whether I am the right person for it.
             </p>

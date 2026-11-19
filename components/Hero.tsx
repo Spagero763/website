@@ -219,7 +219,7 @@ export default function Hero() {
       </div>
 
       <div className="shell mt-16 lg:mt-20">
-        <dl
+        <div
           data-h
           data-reveal
           data-stats
@@ -228,16 +228,16 @@ export default function Hero() {
           {stats.map(({ n, l, href, external }, i) => {
             const inner = (
               <>
-                <dt className="flex items-start font-display text-stat font-medium text-fg">
+                <p className="flex items-start font-display text-stat font-medium text-fg">
                   <CountUp to={n} mode="load" play={done} delay={1.1 + i * 0.1} />
-                </dt>
-                <dd className="mt-2 flex items-center gap-1.5 text-xs leading-snug text-faint transition-colors duration-300 group-hover:text-fg">
+                </p>
+                <p className="mt-2 flex items-center gap-1.5 text-xs leading-snug text-faint transition-colors duration-300 group-hover:text-fg">
                   {l}
                   <ArrowUpRight
                     size={12}
                     className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                   />
-                </dd>
+                </p>
               </>
             );
             const cls = `group block py-7 ${i % 2 === 1 ? "pl-6 md:pl-0" : ""} ${
@@ -253,7 +253,7 @@ export default function Hero() {
               </TransitionLink>
             );
           })}
-        </dl>
+        </div>
       </div>
 
       <div data-strip className="opacity-0">

@@ -1,10 +1,24 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import ChainLogo from "./ChainLogo";
 import { chains } from "@/data/site";
 
 export default function ChainMarquee({ invert = false }: { invert?: boolean }) {
   const items = [...chains, ...chains];
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => el.classList.toggle("is-offscreen", !e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
+      ref={ref}
       className={`marquee mask-fade-x overflow-hidden border-y py-5 ${
         invert ? "border-ink-line" : "border-line"
       }`}

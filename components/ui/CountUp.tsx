@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { onEnter } from "@/lib/inview";
 
 type Props = {
   to: number;
@@ -25,7 +26,7 @@ export default function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
 
   useGSAP(
-    () => {
+    (_, contextSafe) => {
       const el = ref.current;
       if (!el) return;
       if (reducedMotion()) {
@@ -44,10 +45,17 @@ export default function CountUp({
           el.textContent = `${Math.round(state.v)}${suffix}`;
         },
       };
-      if (mode === "scroll") {
-        vars.scrollTrigger = { trigger: el, start: "top 90%", once: true };
+      if (mode === "load") {
+        gsap.to(state, vars);
+        return;
       }
-      gsap.to(state, vars);
+      return onEnter(
+        el,
+        "top 90%",
+        contextSafe!(() => {
+          gsap.to(state, vars);
+        })
+      );
     },
     { dependencies: [play, to] }
   );

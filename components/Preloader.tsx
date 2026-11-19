@@ -37,11 +37,15 @@ export default function Preloader() {
       const n = { v: 0 };
 
       const release = () => {
+        const before = document.documentElement.clientWidth;
         document.body.style.overflow = "";
         getLenis()?.start();
         finish();
-        // the scrollbar comes back here and narrows the page, so pinned sections must re-measure
-        requestAnimationFrame(() => ScrollTrigger.refresh());
+        // where the scrollbar takes up room it comes back here and narrows the page,
+        // so pinned sections have to re-measure
+        requestAnimationFrame(() => {
+          if (document.documentElement.clientWidth !== before) ScrollTrigger.refresh();
+        });
       };
 
       gsap

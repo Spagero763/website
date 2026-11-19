@@ -2,6 +2,7 @@
 
 import { useRef, type ElementType, type ReactNode } from "react";
 import { gsap, SplitText, useGSAP, reducedMotion } from "@/lib/gsap";
+import { onEnter } from "@/lib/inview";
 
 type Props = {
   children: ReactNode;
@@ -42,6 +43,10 @@ export default function TextReveal({
 
       let cancelled = false;
       let split: SplitText | null = null;
+      // an aria-label is only valid on elements with a role, such as headings
+      const labelled = typeof Tag === "string" && /^h[1-6]$/.test(Tag);
+      let entered = mode !== "scroll";
+      let tween: gsap.core.Tween | null = null;
 
       const run = contextSafe!(() => {
         if (cancelled) return;
@@ -51,6 +56,7 @@ export default function TextReveal({
           linesClass: "split-line",
           wordsClass: "split-word",
           autoSplit: true,
+          aria: labelled ? "auto" : "none",
           onSplit(self) {
             const targets = type === "lines" ? self.lines : self.words;
             gsap.set(targets, { yPercent: 110, rotate: type === "lines" ? 0.6 : 0 });
@@ -63,18 +69,24 @@ export default function TextReveal({
               stagger,
               ease: "power4.out",
             };
-            if (mode === "scroll") {
-              vars.scrollTrigger = { trigger: el, start, once: true };
-            }
-            return gsap.to(targets, vars);
+            tween = gsap.to(targets, { ...vars, paused: !entered });
+            return tween;
           },
         });
       });
 
       document.fonts.ready.then(run);
+      const stop =
+        mode === "scroll"
+          ? onEnter(el, start, () => {
+              entered = true;
+              tween?.play();
+            })
+          : undefined;
 
       return () => {
         cancelled = true;
+        stop?.();
         split?.revert();
       };
     },

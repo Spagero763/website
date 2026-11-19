@@ -152,4 +152,15 @@ export const training: Training[] = [
     linkLabel: "Course",
     image: "/claude-architect-certificate-devcompass.png",
   },
+  {
+    org: "Federal University of Technology, Akure",
+    program: "B.Eng. Computer Engineering",
+    period: "2024 - present",
+    bullets: [
+      "In the fourth year of a five year degree",
+      "Everything on this site was built alongside it",
+    ],
+    link: "https://www.futa.edu.ng",
+    linkLabel: "University",
+  },
 ];
