@@ -8,7 +8,7 @@ const facts = [
   { k: "Languages", v: "Solidity, Cairo, Rust, TypeScript" },
   { k: "Testing", v: "Foundry, with fork tests against live deployments" },
   { k: "Focus", v: "Protocols, security review, AI agents, full stack" },
-  { k: "Based in", v: "Ondo, Nigeria. Remote or relocation." },
+  { k: "Based in", v: "Nigeria" },
 ];
 
 export default function About() {

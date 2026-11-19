@@ -40,7 +40,7 @@ export default function Footer() {
             © 2026 Afolabi Ayomide Emmanuel. Blockchain engineer.
           </p>
           <p className="font-mono tabular-nums text-ink-muted sm:text-center">
-            Ondo, Nigeria <span className="text-ink-fg">{time || "--:--:--"}</span> WAT
+            Nigeria <span className="text-ink-fg">{time || "--:--:--"}</span> WAT
           </p>
           <div className="sm:text-right">
             <button

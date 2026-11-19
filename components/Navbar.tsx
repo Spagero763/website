@@ -239,7 +239,7 @@ export default function Navbar() {
               <ArrowUpRight size={16} />
             </a>
             <p className="text-center font-mono text-[11px] text-ink-muted">
-              Ondo, Nigeria. Available for work.
+              Nigeria. Available for work.
             </p>
           </div>
         </div>

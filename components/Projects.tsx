@@ -26,7 +26,7 @@ export default function Projects() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      mm.add("(prefers-reduced-motion: no-preference) and (min-height: 541px)", () => {
         const el = stage.current;
         if (!el) return;
         const images = gsap.utils.toArray<HTMLElement>("[data-stage-image]", el);
@@ -123,7 +123,7 @@ export default function Projects() {
         <div className="shell flex h-[100svh] flex-col pb-5 pt-[calc(var(--nav-h)+0.25rem)] sm:pb-7 lg:pt-[calc(var(--nav-h)+1rem)]">
           <div className="flex shrink-0 items-end justify-between gap-6 border-b border-line pb-4 lg:pb-5">
             <div className="min-w-0">
-              <Reveal variant="fade" className="flex items-center gap-4">
+              <Reveal variant="fade" className="stage-eyebrow flex items-center gap-4">
                 <span className="font-mono text-xs font-medium text-accent">02</span>
                 <Reveal as="span" variant="line" delay={0.15} className="h-px w-10 origin-left bg-line-strong sm:w-14">
                   {null}
@@ -133,7 +133,7 @@ export default function Projects() {
               <TextReveal
                 as="h2"
                 delay={0.1}
-                className="mt-3 font-display text-2xl font-medium text-fg sm:text-3xl lg:mt-4 lg:text-section"
+                className="mt-3 font-display text-xl font-medium text-fg min-[380px]:text-2xl sm:text-3xl lg:mt-4 lg:text-section"
               >
                 Products I designed and shipped
               </TextReveal>
@@ -166,8 +166,8 @@ export default function Projects() {
             </div>
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col gap-4 pt-4 lg:grid lg:grid-cols-[1.15fr_1fr] lg:gap-12 lg:pt-6 xl:gap-16">
-            <div className="relative min-h-[9rem] flex-1 overflow-hidden rounded-2xl border border-line bg-ink shadow-deck lg:min-h-0">
+          <div className="flex min-h-0 flex-1 flex-col gap-4 pt-4 lg:grid lg:grid-cols-[1.15fr_1fr] lg:grid-rows-[minmax(0,1fr)] lg:gap-12 lg:pt-6 xl:gap-16">
+            <div className="stage-media relative min-h-[9rem] flex-1 overflow-hidden rounded-2xl border border-line bg-ink shadow-deck lg:min-h-0">
               {featured.map((p, i) => (
                 <div
                   key={p.slug}
@@ -371,15 +371,24 @@ function StageText({ project, index, total }: { project: Project; index: number;
         </span>
       </div>
 
-      <h3 className="mt-3 font-display text-3xl font-medium tracking-tightest text-fg sm:text-4xl lg:mt-6 lg:text-5xl xl:text-6xl">
+      <h3
+        data-stage-name
+        className="mt-3 font-display text-3xl font-medium tracking-tightest text-fg sm:text-4xl lg:mt-6 lg:text-5xl xl:text-6xl"
+      >
         {project.name}
       </h3>
       <p className="mt-1.5 text-sm font-semibold text-accent lg:mt-3 lg:text-base">{project.tagline}</p>
-      <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted pretty line-clamp-2 sm:line-clamp-3 lg:mt-4 lg:text-base xl:line-clamp-4 [@media(max-height:720px)]:hidden lg:[@media(max-height:720px)]:block">
+      <p
+        data-stage-desc
+        className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted pretty line-clamp-2 sm:line-clamp-3 lg:mt-4 lg:text-base xl:line-clamp-4"
+      >
         {project.description}
       </p>
 
-      <dl className="mt-3 grid grid-cols-3 gap-4 border-t border-line pt-3 lg:mt-6 lg:gap-5 lg:pt-5">
+      <dl
+        data-stage-metrics
+        className="mt-3 grid grid-cols-3 gap-4 border-t border-line pt-3 lg:mt-6 lg:gap-5 lg:pt-5"
+      >
         {project.metrics.map((m) => (
           <div key={m.label}>
             <dt className="font-display text-xl font-medium tracking-tightest text-fg lg:text-2xl">{m.value}</dt>
@@ -388,7 +397,7 @@ function StageText({ project, index, total }: { project: Project; index: number;
         ))}
       </dl>
 
-      <div className="mt-4 hidden flex-wrap gap-2 sm:flex lg:mt-5">
+      <div data-stage-chips className="mt-4 hidden flex-wrap gap-2 sm:flex lg:mt-5">
         {(project.deployments || project.proof) && (
           <p className="inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-3 py-1.5 font-mono text-[11px] font-medium text-accent">
             <FileCode2 size={12} />
@@ -402,6 +411,7 @@ function StageText({ project, index, total }: { project: Project; index: number;
         {project.tech.slice(0, 4).map((t) => (
           <span
             key={t}
+            data-stage-tech
             className="rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] text-muted"
           >
             {t}

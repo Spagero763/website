@@ -36,10 +36,13 @@ export default function Contact() {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Magnetic>
-                <a href={`mailto:${EMAIL}`} className="btn btn-light !px-7 !py-4">
-                  <Mail size={16} />
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="btn btn-light !px-5 !py-4 text-[13px] sm:!px-7 sm:text-sm"
+                >
+                  <Mail size={16} className="flex-shrink-0" />
                   {EMAIL}
-                  <ArrowUpRight size={16} />
+                  <ArrowUpRight size={16} className="hidden sm:block" />
                 </a>
               </Magnetic>
               <Magnetic>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/gsap";
 import { getLenis } from "@/lib/scroll";
 import { useIntro } from "./Intro";
 
@@ -40,6 +40,8 @@ export default function Preloader() {
         document.body.style.overflow = "";
         getLenis()?.start();
         finish();
+        // the scrollbar comes back here and narrows the page, so pinned sections must re-measure
+        requestAnimationFrame(() => ScrollTrigger.refresh());
       };
 
       gsap
